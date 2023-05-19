@@ -1,0 +1,66 @@
+.personal-list {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+}
+
+.personal-list input[type="text"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.personal-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.personal-list th,
+.personal-list td {
+  
+  border: 1px solid #ccc;
+}
+
+.personal-list th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.personal-list tbody tr:nth-child(even),
+.link-table:nth-child(even) {
+  background-color: #f0f0f0;
+}
+
+.personal-list tbody tr:hover,
+.link-table:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .personal-list th,
+  .personal-list td {
+    font-size: 0.8rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .personal-list th,
+  .personal-list td {
+    font-size: 0.6rem;
+  }
+}
+
+.link-table {
+   display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  color: black;
+  text-decoration: none;
+}
+
