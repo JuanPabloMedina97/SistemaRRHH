@@ -12,7 +12,7 @@ export const DELETE_PERSON = "DELETE_PERSON";
 
 
 
-export const getAllPersonAction = () => async (dispatch, getState) => {
+export const getAllPersonAction = () => async (dispatch, getState) => { //action que trae la lista de personas
     try {
         const res = await axios.get("http://localhost:3001/user");
         dispatch({
@@ -24,24 +24,23 @@ export const getAllPersonAction = () => async (dispatch, getState) => {
     }
 }
 
-export const getPersonDetailAction = (legajo) => async (dispatch, getState) => {
-    try {
-        axios.get('https://run.mocky.io/v3/20857017-5729-4774-ba8e-10b02369fb97') //cuando se agrega una persona nueva saltará error porque esa persona no esta en la api y aqui se consume los datos de la api, no del estado local
-            .then(response => {
-                const data = response.data;
-                const result = data.find(obj => obj.legajo == legajo);
-                dispatch({
-                    type: GET_PERSON_DETAIL,
-                    payload: result
-                })
-            })
-            .catch(error => console.error(error));
-    } catch (error) {
-        console.log(error);
-    }
+export const getPersonDetailAction = (legajo) => async (dispatch, getState) => { //action que trae el detalle de la persona por su legajo
+
+    axios(`http://localhost:3001/user/${legajo}`)
+        .then(response => {
+            const result = response.data;
+
+            dispatch({
+                type: GET_PERSON_DETAIL,
+                payload: result
+            });
+        }).catch(err => {
+            console.log(err.response.data.error);
+        })
+
 }
 
-export const createPersonAction = (person) => async (dispatch, getState) => {
+export const createPersonAction = (person) => async (dispatch, getState) => { //action que crea una persona nueva
     try {
         dispatch({
             type: CREATE_PERSON,
@@ -52,13 +51,13 @@ export const createPersonAction = (person) => async (dispatch, getState) => {
     }
 }
 
-export const updatePersonAction = () => {
+export const updatePersonAction = () => { //action que modifica a la persona ya creada
     return function () {
 
     }
 }
 
-export const deletePersonAction = () => {
+export const deletePersonAction = () => { //action que elimina la persona
     return function () {
 
     }
