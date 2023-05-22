@@ -14,7 +14,7 @@ export const DELETE_PERSON = "DELETE_PERSON";
 
 export const getAllPersonAction = () => async (dispatch, getState) => {
     try {
-        const res = await axios.get("https://run.mocky.io/v3/20857017-5729-4774-ba8e-10b02369fb97");
+        const res = await axios.get("http://localhost:3001/user");
         dispatch({
             type: GET_ALL_PERSON,
             payload: res.data
