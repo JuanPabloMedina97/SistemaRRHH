@@ -8,7 +8,7 @@ const StaffDetail = () => { //hay que traer los datos de una api o bd
 
   const { id } = useParams(); //el id lo uso como legajo
   const dispatch = useDispatch();
-  const { nombre, apellido, dni, legajo, sector } = useSelector(store => store.person.personDetail); //traemos el detalle de la persona hay que traer absolutamente todo
+  const { nombre, apellido, dni, legajo, sector, cuil } = useSelector(store => store.person.personDetail); //traemos el detalle de la persona hay que traer absolutamente todo
 
   useEffect(() => {
     console.log('getPersonalDetailAction called');
@@ -43,7 +43,7 @@ const StaffDetail = () => { //hay que traer los datos de una api o bd
   };
 
   const handleBack = () => {
-    navigate('/staff');
+    navigate('/user');
   };
 
 
@@ -73,9 +73,9 @@ const StaffDetail = () => { //hay que traer los datos de una api o bd
         <div className="field">
           <label>CUIL ID:</label>
           {editing ?
-            <input type="text" value={editedData.cuilId} onChange={e => handleEdit('cuilId', e.target.value)} />
+            <input type="text" value={editedData.cuil} onChange={e => handleEdit('cuilId', e.target.value)} />
             :
-            <div onDoubleClick={() => setEditing(true)}>{'data.cuilId'}</div>
+            <div onDoubleClick={() => setEditing(true)}>{cuil}</div>
           }
         </div>
         <div className="field">

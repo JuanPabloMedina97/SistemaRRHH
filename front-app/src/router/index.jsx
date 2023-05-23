@@ -30,11 +30,11 @@ export const router = createBrowserRouter([
                 element: <MedicalService />
             },
             {
-                path: '/staff',
+                path: '/user',
                 element: <Staff />
             },
             {
-                path: '/staff/:id',
+                path: '/user/:id',
                 element: <StaffDetail />
             },
         ]

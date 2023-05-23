@@ -1,25 +1,19 @@
 const express = require('express');
 const server = express();
-const morgan = require('morgan');
-const cors = require('cors');
-
+const morganMiddleware = require('./src/middlewares/morgan');
+const corsMiddleware = require('./src/middlewares/cors');
+const expressJsonMiddleware = require('./src/middlewares/expressJson');
 const userRoutes = require('./src/routes/userRoutes'); //trae el listado de personas (solo para mostrar lo principal, el detalle va en otra ruta)
-const detailUserRoutes = require('./src/routes/detailUserRoutes');
 
 
 
-server.use(cors());
-server.use(express.json());
-server.use(morgan('dev'));
+server.use(corsMiddleware);
+server.use(expressJsonMiddleware);
+server.use(morganMiddleware);
 
 
-
-//ruta para obetener los usuarios
-server.use('/user', userRoutes);
-
-//ruta para obtener un usuario por su id
-server.use('/user/', detailUserRoutes);
-
+//ruta para obetener los usuarios y usuarios por id
+server.use('/', userRoutes);
 
 
 

@@ -13,7 +13,7 @@ import './Home.css';
 const Home = () => {
 
   const icons = [
-    { path: '/staff', icon: <BsFillPeopleFill fontSize={'50px'}/>, name: 'Personal' },
+    { path: '/user', icon: <BsFillPeopleFill fontSize={'50px'}/>, name: 'Personal' },
     { path: '/pagina2', icon: <BsFillClipboardCheckFill fontSize={'50px'}/>, name: 'Asistencia' },
     { path: '/pagina3', icon: <BsShieldPlus fontSize={'50px'}/>, name: 'HyS' },
     { path: '/pagina4', icon: 'fa fa-film', name: 'RSE' },
