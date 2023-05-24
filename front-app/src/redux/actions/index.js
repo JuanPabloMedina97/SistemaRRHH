@@ -40,25 +40,48 @@ export const getPersonDetailAction = (legajo) => async (dispatch, getState) => {
 
 }
 
-export const createPersonAction = (person) => async (dispatch, getState) => { //action que crea una persona nueva
+export const createPersonAction = (person) => async (dispatch) => { //action que crea una persona nueva
     try {
+        const response = await axios.post('http://localhost:3001/user', person)
+        console.log('Empleado agregado con exito: ', response.data);
         dispatch({
             type: CREATE_PERSON,
             payload: person
         })
     } catch (error) {
+        console.log('Log de person', person);
+        console.error('Error al agregar el empleado:', error);
+    }
+}
+
+export const updatePersonAction = (person) => async (dispatch) => { //action que modifica a la persona ya creada
+    try {
+        console.log('informacion de la persona', person);
+        const response = await axios.put(`http://localhost:3001/user/${person.legajo}`, person);
+
+        dispatch({
+            type: UPDATE_PERSON,
+            payload: response.data
+        });
+        dispatch(getPersonDetailAction(person.legajo));
+    } catch (error) {
         console.log(error);
     }
 }
 
-export const updatePersonAction = () => { //action que modifica a la persona ya creada
-    return function () {
+export const deletePersonAction = (legajo) => {
+    return (dispatch) => {
+        axios.delete(`http://localhost:3001/user/${legajo}`)
+            .then(() => {
+                dispatch({
+                    type: DELETE_PERSON,
+                    payload: legajo
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+            })
 
     }
 }
 
-export const deletePersonAction = () => { //action que elimina la persona
-    return function () {
-
-    }
-}

@@ -1,92 +1,93 @@
 .card {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    width: 400px;
-    z-index: 999;
-  }
-  
-  .card-header {
-    background-color: #eee;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .card-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-  
-  .close-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding: 0;
-  }
-  
-  .card-body {
-    padding: 10px;
-  }
-  
-  .field {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  
-  .field label {
-    font-weight: bold;
-    margin-right: 10px;
-  }
-  
-  .field input {
-    flex-grow: 1;
-    padding: 5px;
-  }
-  
-  .field div {
-    cursor: pointer;
-  }
-  
-  .card-footer {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px;
-  }
-  
-  .edit-buttons button {
-    margin-left: 10px;
-  }
-  
-  .save-btn {
-    background-color: #4CAF50;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 3px;
-  }
-  
-  .cancel-btn {
-    background-color: #f44336;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 3px;
-  }
-  
-  .edit-buttons button:hover {
-    opacity: 0.8;
-  }
-  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  z-index: 999;
+}
+
+.card-header {
+  background-color: #eee;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0;
+}
+
+.card-body {
+  padding: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.field {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.field label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.field input {
+  flex-grow: 1;
+  padding: 5px;
+}
+
+.field div {
+  cursor: pointer;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.edit-buttons button {
+  margin-left: 10px;
+}
+
+.save-btn {
+  background-color: #4caf50;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.edit-buttons button:hover {
+  opacity: 0.8;
+}

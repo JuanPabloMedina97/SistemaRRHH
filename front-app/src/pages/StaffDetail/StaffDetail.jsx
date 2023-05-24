@@ -1,50 +1,80 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './StaffDetail.css';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPersonDetailAction } from '../../redux/actions';
+import { deletePersonAction, getAllPersonAction, getPersonDetailAction, updatePersonAction } from '../../redux/actions';
 
-const StaffDetail = () => { //hay que traer los datos de una api o bd
-
-  const { id } = useParams(); //el id lo uso como legajo
+const StaffDetail = () => {
+  
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const { nombre, apellido, dni, legajo, sector, cuil } = useSelector(store => store.person.personDetail); //traemos el detalle de la persona hay que traer absolutamente todo
-
-  useEffect(() => {
-    console.log('getPersonalDetailAction called');
-    dispatch(getPersonDetailAction(id));
-  }, [])
-
+  const { nombre, apellido, dni, legajo, sector, cuil } = useSelector(
+    (store) => store.person.personDetail
+  );
 
   const navigate = useNavigate();
-  
-  const data = {}
+
   const [editing, setEditing] = useState(false);
-  const [editedData, setEditedData] = useState(data);
-  
-
-
+  const [editedData, setEditedData] = useState({
+    legajo: "",
+    dni: "",
+    cuil: "",
+    nombre: "",
+    apellido: "",
+    sector: "",
+  });
 
   const handleEdit = (field, value) => {
     setEditedData({
       ...editedData,
-      [field]: value
+      [field]: value,
     });
   };
 
   const handleCancel = () => {
     setEditing(false);
-    setEditedData(data);
+    setEditedData({
+      legajo,
+      dni,
+      cuil,
+      nombre,
+      apellido,
+      sector,
+    });
   };
 
   const handleSave = () => {
     setEditing(false);
-    // Aquí es donde enviarías los datos editados a través de una función prop o una API
+    dispatch(updatePersonAction(editedData));
+  };
+
+  const handleDelete = () => {
+    const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar este empleado?');
+    if (confirmDelete) {
+      dispatch(deletePersonAction(id));
+      dispatch(getAllPersonAction());
+      navigate('/user');
+    }
   };
 
   const handleBack = () => {
-    navigate('/user');
+    navigate("/user");
   };
+
+  useEffect(() => {
+    dispatch(getPersonDetailAction(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    setEditedData({
+      legajo,
+      dni,
+      cuil,
+      nombre,
+      apellido,
+      sector,
+    });
+  }, [legajo, dni, cuil, nombre, apellido, sector]);
 
 
   return (
@@ -53,11 +83,11 @@ const StaffDetail = () => { //hay que traer los datos de una api o bd
         <h2>Detalles del empleado</h2>
         <button className="close-btn" onClick={() => handleBack()}>X</button>
       </div>
-      <div className="card-body">
+      <div className="card-body" >
         <div className="field">
-          <label>Legajo ID:</label>
+          <label>Legajo:</label>
           {editing ?
-            <input type="text" value={editedData.legajoId} onChange={e => handleEdit('legajoId', e.target.value)} />
+            <input type="text" value={editedData.legajo} onChange={e => handleEdit('legajo', e.target.value)} disabled />
             :
             <div onDoubleClick={() => setEditing(true)}>{legajo}</div>
           }
@@ -71,9 +101,9 @@ const StaffDetail = () => { //hay que traer los datos de una api o bd
           }
         </div>
         <div className="field">
-          <label>CUIL ID:</label>
+          <label>CUIL:</label>
           {editing ?
-            <input type="text" value={editedData.cuil} onChange={e => handleEdit('cuilId', e.target.value)} />
+            <input type="text" value={editedData.cuil} onChange={e => handleEdit('cuil', e.target.value)} />
             :
             <div onDoubleClick={() => setEditing(true)}>{cuil}</div>
           }
@@ -96,17 +126,31 @@ const StaffDetail = () => { //hay que traer los datos de una api o bd
         </div>
         <div className="field">
           <label>Sector:</label>
+          
           {editing ?
-            <input type="text" value={editedData.sector} onChange={e => handleEdit('sector', e.target.value)} />
+            <select id="sector" name="sector" onChange={e => handleEdit('sector', e.target.value)} required>
+              <option value='Pregrado'>Pregrado</option>
+              <option value='Lab Calidad'>Lab Calidad</option>
+              <option value='Secadero'>Secadero</option>
+              <option value='Deposito'>Deposito</option>
+              <option value='Efluentes'>Efluentes</option>
+              <option value='Envasado'>Envasado</option>
+              <option value='Finca'>Finca</option>
+              <option value='Administracion'>Administracion</option>
+              <option value='Porteria'>Porteria</option>
+              <option value='Recursos Humanos'>Recursos Humanos</option>
+            </select>
             :
             <div onDoubleClick={() => setEditing(true)}>{sector}</div>
           }
         </div>
+
         {/* Aquí van el resto de los campos */}
       </div>
       <div className="card-footer">
         {editing &&
           <div className="edit-buttons">
+            <button className="cancel-btn" onClick={handleDelete}>Eliminar empleado</button>
             <button className="save-btn" onClick={handleSave}>Guardar cambios</button>
             <button className="cancel-btn" onClick={handleCancel}>Cancelar</button>
           </div>

@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import './Staff.css';
-import { Link } from 'react-router-dom';
-import NewEmployee from './NewEmployee/NewEmployee';
-import Swal from 'sweetalert2'
-
-
-
-
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllPersonAction, getPersonDetailAction } from '../../redux/actions'
+import { Link } from 'react-router-dom';
+import './Staff.css';
+import NewEmployee from './NewEmployee/NewEmployee';
+import Swal from 'sweetalert2';
+
+import { getAllPersonAction } from '../../redux/actions';
 
 
 const Staff = () => {
@@ -18,7 +15,6 @@ const Staff = () => {
 
   useEffect(() => {
     console.log("getAllPersonAction called");
-    // dispatch(getAllPersonAction());
     Swal.showLoading();
 
     dispatch(getAllPersonAction()).then(() => {

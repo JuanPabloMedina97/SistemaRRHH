@@ -1,54 +1,59 @@
-import React, { useEffect, useState } from 'react'
-
-import './NewEmployee.css'
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import './NewEmployee.css';
+import { useDispatch } from 'react-redux';
 import { createPersonAction } from '../../../redux/actions';
 
 const NewEmployee = () => {
 
     const [showModal, setShowModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); // Estado para controlar la carga
+    const dispatch = useDispatch();
 
-    const toggleModal = () => { //cambia el estado del modal
+    const toggleModal = () => {
         setShowModal(!showModal);
     };
 
-    const dispatch = useDispatch();
-    const personal = useSelector(store => store.person.person)
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setIsLoading(true); // Iniciar la carga
 
-    const [person, setPerson] = useState(null)
-
-    const handleSubmit = (event) => { //creamos el nuevo objeto 
-        event.preventDefault(); // Previene el comportamiento por defecto del formulario
-
-        const formData = new FormData(event.target); // Crea un objeto FormData con los valores del formulario
-
-        const nuevoEmpleado = Object.fromEntries(formData); // Convierte el objeto FormData en un objeto plano
-
-        setPerson(nuevoEmpleado)
+        const formData = new FormData(event.target);
+        const nuevoEmpleado = Object.fromEntries(formData);
 
         event.target.reset();
 
+        try {
+            await dispatch(createPersonAction(nuevoEmpleado));
+            setIsLoading(false); // Finalizar la carga
 
+        } catch (error) {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ha ocurrido un error al cargar el empleado',
+            });
+        } finally {
+            setIsLoading(false); // Finalizar la carga en caso de error
+            toggleModal(); // Cerrar el modal
+        }
     };
 
     useEffect(() => {
-        if (person) {
-            dispatch(createPersonAction(person));
-            console.log("nueva lista:", personal);
-            
+        if (isLoading) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Cargando',
+                text: 'Espere mientras se agrega el empleado...',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            });
+        } else {
+            Swal.close(); // Cerrar SweetAlert2 cuando isLoading sea false
         }
-    }, [dispatch, person]);
-
-
-
-
-
-
-
-
-
-
-
+    }, [isLoading]);
 
 
     return (
@@ -70,11 +75,25 @@ const NewEmployee = () => {
                             <label htmlFor="dni">DNI:</label>
                             <input type="number" id="dni" name="dni" required />
 
+                            <label htmlFor="cuil">CUIL:</label>
+                            <input type="number" id="cuil" name="cuil" required />
+
                             <label htmlFor="legajo">Legajo:</label>
                             <input type="number" id="legajo" name="legajo" required />
 
                             <label htmlFor="sector">Sector:</label>
-                            <input type="text" id="sector" name="sector" required />
+                            <select id="sector" name="sector" required>
+                                <option value='Pregrado'>Pregrado</option>
+                                <option value='Lab Calidad'>Lab Calidad</option>
+                                <option value='Secadero'>Secadero</option>
+                                <option value='Deposito'>Deposito</option>
+                                <option value='Efluentes'>Efluentes</option>
+                                <option value='Envasado'>Envasado</option>
+                                <option value='Finca'>Finca</option>
+                                <option value='Administracion'>Administracion</option>
+                                <option value='Porteria'>Porteria</option>
+                                <option value='Recursos Humanos'>Recursos Humanos</option>
+                            </select>
 
                             <div className="modal-buttons">
                                 <button type="button" onClick={toggleModal}>

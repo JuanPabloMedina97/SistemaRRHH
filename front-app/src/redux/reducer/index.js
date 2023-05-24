@@ -16,13 +16,35 @@ const initialState = {
 
 
 export default function staffReducer(state = initialState, action) {
-    switch (action.type){
+    switch (action.type) {
         case GET_ALL_PERSON:
-            return {...state, person: action.payload};
+            return { ...state, person: action.payload };
         case GET_PERSON_DETAIL:
-            return {...state, personDetail: action.payload}
+            return { ...state, personDetail: action.payload }
         case CREATE_PERSON:
-            return {...state, person:[...state.person, action.payload]};
+            return { ...state, person: [...state.person, action.payload] };
+        case UPDATE_PERSON: {
+
+            const updateUserLegajo = state.person.findIndex(person => person.legajo === action.payload.legajo); //busca la persona con el mismo legajo del estado inciial
+            if (updateUserLegajo === -1) {
+                return state; // Si no se encuentra la persona, se devuelve el estado actual sin cambios
+            }
+            const updatedPersonList = [...state.person];
+            updatedPersonList[updateUserLegajo] = action.payload;
+            return { ...state, person: updatedPersonList };
+
+        }
+        case DELETE_PERSON: {
+            const legajo = action.payload;
+            console.log(legajo);
+            const newList = state.person.filter((user) => user.legajo !== legajo);
+            console.log(newList);
+            return{
+                ...state,
+                person: newList,
+            }
+        }
+            
         default:
             return state;
     }

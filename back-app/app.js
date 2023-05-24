@@ -12,7 +12,7 @@ server.use(expressJsonMiddleware);
 server.use(morganMiddleware);
 
 
-//ruta para obetener los usuarios y usuarios por id
+//ruta para obetener los usuarios, usuarios por id, crearlos, actualizarlos y eliminarlos
 server.use('/', userRoutes);
 
 
