@@ -8,7 +8,7 @@ import Hys from "../pages/Hys/Hys"
 import MedicalService from "../pages/MedicalService/MedicalService"
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Staff from "../pages/Staff/Staff";
-import StaffDetail from "../pages/StaffDetail/StaffDetail"
+import StaffParams from "../pages/StaffDetail/StaffParams";
 
 
 export const router = createBrowserRouter([
@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/user/:id',
-                element: <StaffDetail />
+                element: <StaffParams />
             },
         ]
     },

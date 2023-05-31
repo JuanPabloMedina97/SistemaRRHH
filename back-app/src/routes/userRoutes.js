@@ -17,17 +17,20 @@ userRoutes.get('/user', async (req, res) => { //ruta para obtener los usuarios
     }
 });
 
-userRoutes.get('/user/:id', async (req, res) => { //ruta para obtener el detalle de un usuario por su id (legajo)
+userRoutes.get('/user/:id', async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await empleadosController.getUsers();
-        const result = user.find(persona => persona.legajo == id);
-        res.json(result)
+      const { id } = req.params;
+      const user = await empleadosController.getUserDetail(id);
+      if (user) {
+        res.json(user);
+      } else {
+        res.status(404).json({ message: 'Persona no encontrada' });
+      }
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: 'Persona no encontrada' });
+      console.log(error);
+      res.status(500).json({ message: 'Error en el servidor' });
     }
-});
+  });
 
 userRoutes.post('/user', async (req, res) => { //ruta para crear un usuario
     try {

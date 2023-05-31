@@ -2,15 +2,22 @@ import { useEffect, useState } from 'react';
 import './StaffDetail.css';
 import { useNavigate, useParams, } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deletePersonAction, getAllPersonAction, getPersonDetailAction, updatePersonAction } from '../../redux/actions';
+import { deletePersonAction, getAllPersonAction, updatePersonAction } from '../../redux/actions';
 
-const StaffDetail = () => {
-  
+
+
+const StaffDetail = ({ persona }) => {
+
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { nombre, apellido, dni, legajo, sector, cuil } = useSelector(
-    (store) => store.person.personDetail
-  );
+
+  const { legajo, dni, cuil, nombre, apellido, informacionPersonalDos,  } = persona;
+  const { sexo, estadoCivil, edad, nacimiento, lentes, antiGripal, carnetVacuna, tratamientoMedicoMedicacion, movilidad } = informacionPersonalDos
+
+
+
+
+
 
   const navigate = useNavigate();
 
@@ -22,7 +29,17 @@ const StaffDetail = () => {
     nombre: "",
     apellido: "",
     sector: "",
+    sexo: "",
+    estadoCivil: "",
+    edad: "",
+    nacimiento: "",
+    lentes: "",
+    antiGripal: "",
+    carnetVacuna: "",
+    tratamientoMedicoMedicacion: "",
+    movilidad: ""
   });
+  
 
   const handleEdit = (field, value) => {
     setEditedData({
@@ -39,7 +56,7 @@ const StaffDetail = () => {
       cuil,
       nombre,
       apellido,
-      sector,
+      // sector,
     });
   };
 
@@ -52,8 +69,11 @@ const StaffDetail = () => {
     const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar este empleado?');
     if (confirmDelete) {
       dispatch(deletePersonAction(id));
-      dispatch(getAllPersonAction());
-      navigate('/user');
+      dispatch(getAllPersonAction())
+        .then(() => {
+          navigate('/user');
+        });
+
     }
   };
 
@@ -61,9 +81,7 @@ const StaffDetail = () => {
     navigate("/user");
   };
 
-  useEffect(() => {
-    dispatch(getPersonDetailAction(id));
-  }, [dispatch, id]);
+
 
   useEffect(() => {
     setEditedData({
@@ -72,9 +90,9 @@ const StaffDetail = () => {
       cuil,
       nombre,
       apellido,
-      sector,
+      // sector,
     });
-  }, [legajo, dni, cuil, nombre, apellido, sector]);
+  }, [legajo, dni, cuil, nombre, apellido,]);
 
 
   return (
@@ -84,6 +102,7 @@ const StaffDetail = () => {
         <button className="close-btn" onClick={() => handleBack()}>X</button>
       </div>
       <div className="card-body" >
+        <h3>Informacion personal</h3>
         <div className="field">
           <label>Legajo:</label>
           {editing ?
@@ -126,7 +145,7 @@ const StaffDetail = () => {
         </div>
         <div className="field">
           <label>Sector:</label>
-          
+
           {editing ?
             <select id="sector" name="sector" onChange={e => handleEdit('sector', e.target.value)} required>
               <option value='Pregrado'>Pregrado</option>
@@ -141,7 +160,48 @@ const StaffDetail = () => {
               <option value='Recursos Humanos'>Recursos Humanos</option>
             </select>
             :
-            <div onDoubleClick={() => setEditing(true)}>{sector}</div>
+            <div onDoubleClick={() => setEditing(true)}>{'sector'}</div>
+          }
+        </div>
+        
+        <div className="field">
+          <label>Sexo:</label>
+          {editing ?
+            <input type="text" value={editedData.sexo} onChange={e => handleEdit('sexo', e.target.value)} disabled />
+            :
+            <div onDoubleClick={() => setEditing(true)}>{sexo}</div>
+          }
+        </div>
+        <div className="field">
+          <label>Estado civil:</label>
+          {editing ?
+            <input type="text" value={editedData.estadoCivil} onChange={e => handleEdit('estadoCivil', e.target.value)} disabled />
+            :
+            <div onDoubleClick={() => setEditing(true)}>{estadoCivil}</div>
+          }
+        </div>
+        <div className="field">
+          <label>Edad:</label>
+          {editing ?
+            <input type="text" value={editedData.edad} onChange={e => handleEdit('edad', e.target.value)} disabled />
+            :
+            <div onDoubleClick={() => setEditing(true)}>{edad}</div>
+          }
+        </div>
+        <div className="field">
+          <label>Nacimiento:</label>
+          {editing ?
+            <input type="text" value={editedData.nacimiento} onChange={e => handleEdit('nacimiento', e.target.value)} disabled />
+            :
+            <div onDoubleClick={() => setEditing(true)}>{nacimiento}</div>
+          }
+        </div>
+        <div className="field">
+          <label>Lentes:</label>
+          {editing ?
+            <input type="text" value={editedData.lentes} onChange={e => handleEdit('lentes', e.target.value)} disabled />
+            :
+            <div onDoubleClick={() => setEditing(true)}>{lentes}</div>
           }
         </div>
 

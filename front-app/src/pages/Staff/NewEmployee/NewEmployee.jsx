@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import './NewEmployee.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPersonAction } from '../../../redux/actions';
 
 const NewEmployee = () => {
@@ -9,24 +9,34 @@ const NewEmployee = () => {
     const [showModal, setShowModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // Estado para controlar la carga
     const dispatch = useDispatch();
-
+    const personal = useSelector((store) => store.person.person);
     const toggleModal = () => {
         setShowModal(!showModal);
     };
 
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true); // Iniciar la carga
-
-        const formData = new FormData(event.target);
+        const formData = new FormData(event.target); //obtengo los datos del formulario (event.target) y los convierte en un obj
         const nuevoEmpleado = Object.fromEntries(formData);
 
-        event.target.reset();
+        const empleadoExistente = personal.find((empleado) => empleado.legajo === nuevoEmpleado.legajo);
+        if (empleadoExistente) {
+            setIsLoading(false); // Finalizar la carga
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ya existe un empleado con el mismo legajo.',
+            });
+            return;
+        }
 
         try {
             await dispatch(createPersonAction(nuevoEmpleado));
             setIsLoading(false); // Finalizar la carga
-
+            event.target.reset();
         } catch (error) {
 
             Swal.fire({

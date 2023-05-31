@@ -3,6 +3,7 @@ const connection = require('../config/database');
 
 function deleteUser(legajo) {
     return new Promise((resolve, reject) => {
+        console.log(legajo);
         const query = `DELETE FROM empleados WHERE legajo = ?`;
 
         connection.query(query, [legajo], (error, results) => {

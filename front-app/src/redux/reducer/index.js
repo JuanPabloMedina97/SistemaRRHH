@@ -10,7 +10,8 @@ import {
 
 const initialState = {
     person: [],
-    personDetail: []
+    personDetail: [],
+    isLoading: true,
 }
 
 
@@ -18,11 +19,20 @@ const initialState = {
 export default function staffReducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALL_PERSON:
-            return { ...state, person: action.payload };
+            return {
+                ...state, person: action.payload,
+                isLoading: false
+            };
         case GET_PERSON_DETAIL:
-            return { ...state, personDetail: action.payload }
+            return {
+                ...state, personDetail: action.payload,
+                isLoading: false
+            }
         case CREATE_PERSON:
-            return { ...state, person: [...state.person, action.payload] };
+            return {
+                ...state, person: [...state.person, action.payload],
+                isLoading: false
+            };
         case UPDATE_PERSON: {
 
             const updateUserLegajo = state.person.findIndex(person => person.legajo === action.payload.legajo); //busca la persona con el mismo legajo del estado inciial
@@ -31,7 +41,7 @@ export default function staffReducer(state = initialState, action) {
             }
             const updatedPersonList = [...state.person];
             updatedPersonList[updateUserLegajo] = action.payload;
-            return { ...state, person: updatedPersonList };
+            return { ...state, person: updatedPersonList, isLoading: false };
 
         }
         case DELETE_PERSON: {
@@ -39,12 +49,13 @@ export default function staffReducer(state = initialState, action) {
             console.log(legajo);
             const newList = state.person.filter((user) => user.legajo !== legajo);
             console.log(newList);
-            return{
+            return {
                 ...state,
                 person: newList,
+                isLoading: false
             }
         }
-            
+
         default:
             return state;
     }

@@ -13,6 +13,16 @@ async function getUsers() {
     };
 };
 
+async function getUserDetail(id) {
+    try {
+        const result = await Empleados.getUserDetail(id);
+        return result;
+    } catch (error) {
+        console.log(error);
+        return error
+    };
+};
+
 const updateUser = (req, res) => {
     const { nombre, apellido, dni, sector, cuil, legajo } = req.body;
 
@@ -54,5 +64,6 @@ const deleteUser = async (req, res) => {
 module.exports = {
     getUsers,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserDetail
 }
