@@ -8,7 +8,7 @@ const updateUser = (data) => {
         const {
             nombre, apellido, dni, cuil,
             legajo, sexo, estadoCivil, edad, nacimiento, lentes, antiGripal, carnetVacuna, tratamientoMedico, medicacion, nombreMedicacion, movilidad,
-            linea, turno, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, sector,
+            linea, turno, rotativo, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, sector, puesto, estadoEmpleado,
             provincia, localidad, cp, calle, numeroCalle, piso, dpto, barrio, detalle, entreCalles, indicacionAdicional, otraDireccion,
             provincia2, cp2, calle2, numeroCalle2, piso2, dpto2, barrio2, detalle2, entreCalles2, indicacionAdicional2,
             numTelefono, numTelefono2, correo, correo2, nombrePariente, numeroPariente, nombrePariente2, numeroPariente2,
@@ -34,8 +34,8 @@ const updateUser = (data) => {
                         reject(error);
                     } else {
                         // Actualizar campos en la tabla "puestodetrabajo"
-                        const puestoDeTrabajoSql = `UPDATE puestodetrabajo SET linea = ?, turno = ?, empresa = ?, condicion = ?, tipoDePago = ?, ingreso = ?, alta = ?, baja = ?, categoria = ?, sindicato = ?, solidario = ?, convenio = ?, condicionCitricola = ?, art = ?, carnetSanidad = ? WHERE legajo = ?`;
-                        const puestoDeTrabajoValues = [linea, turno, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, legajo];
+                        const puestoDeTrabajoSql = `UPDATE puestodetrabajo SET linea = ?, turno = ?, empresa = ?, condicion = ?, tipoDePago = ?, ingreso = ?, alta = ?, baja = ?, categoria = ?, sindicato = ?, solidario = ?, convenio = ?, condicionCitricola = ?, art = ?, carnetSanidad = ?, puesto = ?, rotativo = ?, estadoEmpleado = ? WHERE legajo = ?`;
+                        const puestoDeTrabajoValues = [linea, turno, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, puesto, rotativo, estadoEmpleado, legajo];
                         connection.query(puestoDeTrabajoSql, puestoDeTrabajoValues, (error, puestoDeTrabajoResults) => {
                             if (error) {
                                 reject(error);

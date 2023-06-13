@@ -56,7 +56,7 @@ function getUserDetail(id) {
       const empleados = results.map((row) => {
         const {
           legajo, cuil, dni, nombre, apellido, sexo, estadoCivil, edad, nacimiento, lentes, antiGripal, carnetVacuna, tratamientoMedico, medicacion, nombreMedicacion, movilidad,
-          sector, linea, puesto, turno, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, carnetManipuladorAlimentos,
+          sector, linea, puesto, turno, rotativo, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, carnetManipuladorAlimentos, estadoEmpleado,
           provincia, localidad, cp, calle, numeroCalle, piso, dpto, barrio, detalle, entreCalles, indicacionAdicional, otraDireccion,
           provincia2, localidad2, cp2, calle2, numeroCalle2, piso2, dpto2, barrio2, detalle2, entreCalles2, indicacionAdicional2,
           numTelefono, numTelefono2, correo, correo2, nombrePariente, numeroPariente, nombrePariente2, numeroPariente2,
@@ -77,6 +77,7 @@ function getUserDetail(id) {
             linea,
             puesto,
             turno,
+            rotativo,
             empresa,
             condicion,
             tipoDePago,
@@ -91,6 +92,7 @@ function getUserDetail(id) {
             art,
             carnetSanidad,
             carnetManipuladorAlimentos,
+            estadoEmpleado
           },
           direccion: {
             provincia,
