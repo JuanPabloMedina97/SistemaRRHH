@@ -24,7 +24,7 @@ async function getUserDetail(id) {
 };
 
 const updateUser = (req, res) => {
-    const { nombre, apellido, dni, sector, cuil, legajo } = req.body;
+    const { nombre, apellido, dni, sector, cuil, legajo, ...extraData } = req.body;
 
     const user = {
         nombre,
@@ -32,7 +32,8 @@ const updateUser = (req, res) => {
         dni,
         sector,
         cuil,
-        legajo
+        legajo,
+        ...extraData
     };
 
     updateUserModel.updateUser(user)

@@ -1,13 +1,13 @@
 .card {
   position: fixed;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  width: 400px;
+  width: 500px;
   z-index: 999;
 }
 
@@ -90,4 +90,52 @@
 
 .edit-buttons button:hover {
   opacity: 0.8;
+}
+
+
+/* Estilos generales del select */
+.select-container {
+  position: relative;
+  width: 200px;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #f2f2f2;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Estilos al pasar el cursor sobre el select */
+select:hover {
+  background-color: #e6e6e6;
+}
+
+/* Estilos al enfocar el select */
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #0099ff;
+}
+
+/* Estilos para opciones deshabilitadas */
+select:disabled {
+  background-color: #f8f8f8;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* Estilos para opciones seleccionadas */
+select option:checked {
+  background-color: #0099ff;
+  color: #fff;
 }
