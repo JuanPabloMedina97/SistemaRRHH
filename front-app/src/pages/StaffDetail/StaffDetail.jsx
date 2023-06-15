@@ -2,46 +2,23 @@ import { useEffect, useState } from 'react';
 import './StaffDetail.css';
 import { useNavigate, useParams, } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { deletePersonAction, getAllPersonAction, updatePersonAction } from '../../redux/actions';
+import { deletePersonAction, getAllPersonAction, updatePersonAction, getPersonDetailAction } from '../../redux/actions';
 import { fieldsPersonalInformation, fieldsJob, fieldAdress, fieldAdress2, fieldsContact, education, bankData, clothingSize, categories } from './Fields'
+import RenderFields from './RenderFields';
+
+
 
 const StaffDetail = ({ persona }) => {
 
   const { id } = useParams();
   const dispatch = useDispatch();
-
-
-
-
-
-  const { legajo, dni, cuil, nombre, apellido, informacionPersonalDos, puestoDeTrabajo, contacto, direccion, direccion2, educacion, datosBancarios, talleRopa, observacion } = persona;
-  const { sexo, estadoCivil, edad, nacimiento, lentes, antiGripal, carnetVacuna, tratamientoMedicoMedicacion, movilidad } = informacionPersonalDos
-  const { medicacion, nombreMedicacion, tratamientoMedico } = tratamientoMedicoMedicacion;
-  const { sector, linea, puesto, turno, rotativo, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, estadoEmpleado } = puestoDeTrabajo;
-  const { numTelefono, numTelefono2, correo, correo2, pariente, pariente2 } = contacto;
-  const { nombrePariente, numeroPariente } = pariente;
-  const { nombrePariente2, numeroPariente2 } = pariente2;
-  const { barrio, calle, numeroCalle, cp, detalle, dpto, entreCalles, indicacionAdicional, localidad, piso, provincia, otraDireccion } = direccion
-  const { barrio2, calle2, numeroCalle2, cp2, detalle2, dpto2, entreCalles2, indicacionAdicional2, localidad2, piso2, provincia2 } = direccion2
-  const { cursando, cursos, primaria, secundaria } = educacion;
-  const { alias, banco, cbu, direccionBancaria, direccionBancariaDos, direccionBancariaTres, medioDeCobro } = datosBancarios;
-  const { botasGoma, botin, camisa, campera, chaquetaDefensa, chomba, delantal, equipoLluvia, gorra, mameluco, pantalon, remera, zapatilla } = talleRopa;
-
-
   const navigate = useNavigate();
+  const {direccion} = persona;
+  
 
   const [editing, setEditing] = useState(false);
-  const [editedData, setEditedData] = useState({
-    legajo: "", dni: "", cuil: "", nombre: "", apellido: "", sexo: "", estadoCivil: "", edad: "", nacimiento: "", lentes: "", antiGripal: "", carnetVacuna: "", tratamientoMedico: "", movilidad: "",
-    sector: "", linea: "", puesto: "", turno: "", rotativo: "", empresa: "", condicion: "", tipoDePago: "", ingreso: "", alta: "", baja: "", categoria: "", convenio: "", sindicato: "", solidario: "", condicionCitricola: "", art: "", carnetSanidad: "", estadoEmpleado: "",
-    correo: "", correo2: "", numTelefono: "", numTelefono2: "", nombrePariente: "", numeroPariente: "", nombrePariente2: "", numeroPariente2: "",
-    barrio: "", calle: "", numeroCalle: "", cp: "", detalle: "", dpto: "", entreCalles: "", indicacionAdicional: "", localidad: "", piso: "", provincia: "", otraDireccion: "",
-    barrio2: "", calle2: "", numeroCalle2: "", cp2: "", detalle2: "", dpto2: "", entreCalles2: "", indicacionAdicional2: "", localidad2: "", piso2: "", provincia2: "",
-    cursando: '', cursos: '', primaria: '', secundaria: '',
-    alias: '', banco: '', cbu: '', direccionBancaria: '', direccionBancariaDos: '', direccionBancariaTres: '', medioDeCobro: '',
-    botasGoma: '', botin: '', camisa: '', campera: '', chaquetaDefensa: '', chomba: '', delantal: '', equipoLluvia: '', gorra: '', mameluco: '', pantalon: '', remera: '', zapatilla: ''
-  });
-
+  const [editedData, setEditedData] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState("TODOS");
 
   const handleEdit = (field, value) => {
     setEditedData({
@@ -50,24 +27,19 @@ const StaffDetail = ({ persona }) => {
     });
   };
 
-  const handleCancel = () => {
-    setEditing(false);
-    setEditedData({
-      legajo, dni, cuil, nombre, apellido, sexo, estadoCivil, edad, nacimiento, lentes, antiGripal, carnetVacuna, tratamientoMedico, medicacion, nombreMedicacion, movilidad,
-      sector, linea, puesto, turno, rotativo, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, estadoEmpleado,
-      numTelefono, numTelefono2, correo, correo2, pariente, pariente2, nombrePariente, numeroPariente, nombrePariente2, numeroPariente2,
-      barrio, calle, numeroCalle, cp, detalle, dpto, entreCalles, indicacionAdicional, localidad, piso, provincia, otraDireccion,
-      barrio2, calle2, numeroCalle2, cp2, detalle2, dpto2, entreCalles2, indicacionAdicional2, localidad2, piso2, provincia2,
-      cursando, cursos, primaria, secundaria,
-      alias, banco, cbu, direccionBancaria, direccionBancariaDos, direccionBancariaTres, medioDeCobro,
-      botasGoma, botin, camisa, campera, chaquetaDefensa, chomba, delantal, equipoLluvia, gorra, mameluco, pantalon, remera, zapatilla,
-
-    });
-  };
-
   const handleSave = () => {
     setEditing(false);
-    dispatch(updatePersonAction(editedData));
+    console.log("ID", id);
+    console.log("DATA MODIFICADA", editedData);
+    dispatch(updatePersonAction(id, editedData))
+      .then(() => {
+        dispatch(getPersonDetailAction(id));
+      });
+  };
+
+  const handleCancel = () => {
+    setEditing(false);
+    setEditedData(persona);
   };
 
   const handleDelete = () => {
@@ -86,79 +58,18 @@ const StaffDetail = ({ persona }) => {
     navigate("/user");
   };
 
-
-
-  useEffect(() => {
-    setEditedData({
-      legajo, dni, cuil, nombre, apellido, sexo, estadoCivil, edad, nacimiento, lentes, antiGripal, carnetVacuna, tratamientoMedico, medicacion, nombreMedicacion, movilidad,
-      sector, linea, puesto, turno, rotativo, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, estadoEmpleado,
-      numTelefono, numTelefono2, correo, correo2, pariente, pariente2, nombrePariente, numeroPariente, nombrePariente2, numeroPariente2,
-      barrio, calle, numeroCalle, cp, detalle, dpto, entreCalles, indicacionAdicional, localidad, piso, provincia, otraDireccion,
-      barrio2, calle2, numeroCalle2, cp2, detalle2, dpto2, entreCalles2, indicacionAdicional2, localidad2, piso2, provincia2,
-      cursando, cursos, primaria, secundaria,
-      alias, banco, cbu, direccionBancaria, direccionBancariaDos, direccionBancariaTres, medioDeCobro,
-      botasGoma, botin, camisa, campera, chaquetaDefensa, chomba, delantal, equipoLluvia, gorra, mameluco, pantalon, remera, zapatilla,
-
-    });
-  }, [
-    legajo, dni, cuil, nombre, apellido, sector, sexo, estadoCivil, edad, nacimiento, lentes, antiGripal, carnetVacuna, tratamientoMedico, medicacion, nombreMedicacion, movilidad,
-    linea, turno, rotativo, puesto, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, estadoEmpleado,
-    numTelefono, numTelefono2, correo, correo2, pariente, pariente2, nombrePariente, numeroPariente, nombrePariente2, numeroPariente2,
-    barrio, calle, numeroCalle, cp, detalle, dpto, entreCalles, indicacionAdicional, localidad, piso, provincia, otraDireccion,
-    barrio2, calle2, numeroCalle2, cp2, detalle2, dpto2, entreCalles2, indicacionAdicional2, localidad2, piso2, provincia2,
-    cursando, cursos, primaria, secundaria,
-    alias, banco, cbu, direccionBancaria, direccionBancariaDos, direccionBancariaTres, medioDeCobro,
-    botasGoma, botin, camisa, campera, chaquetaDefensa, chomba, delantal, equipoLluvia, gorra, mameluco, pantalon, remera, zapatilla,
-
-  ]);
-
-
-
-
-  const renderFields = (fields) => {
-    return fields.map((field) => (
-      <div className="field" key={field.name}>
-        <label>{field.label}:</label>
-        {editing ? (
-          field.options ? (
-            <select
-              value={editedData[field.name] || ''}
-              onChange={(e) => handleEdit(field.name, e.target.value)}
-              disabled={field.disabled}
-            >
-              <option value="">Seleccionar</option>
-              {field.options.map((option) => (
-                <option value={option} key={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input
-              type="text"
-              value={editedData[field.name] || ''}
-              onChange={(e) => handleEdit(field.name, e.target.value)}
-              disabled={field.disabled}
-              placeholder={field.placeholder}
-            />
-          )
-        ) : (
-          <div onDoubleClick={() => setEditing(true)}>{editedData[field.name]}</div>
-        )}
-      </div>
-    ));
-  };
-
-
-  const [selectedCategory, setSelectedCategory] = useState("TODOS");
-  
-
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
 
 
-  
+  useEffect(() => {
+    setEditedData(persona);
+  }, [persona]);
+
+
+
+
   return (
     <div className="card">
       <div className="card-header">
@@ -179,32 +90,32 @@ const StaffDetail = ({ persona }) => {
         {selectedCategory === "TODOS" && (
           <>
             <h3>Información personal</h3>
-            {renderFields(fieldsPersonalInformation)}
+            {RenderFields(fieldsPersonalInformation, editing, editedData, handleEdit,setEditing)}
 
             <h3>Puesto de trabajo</h3>
-            {renderFields(fieldsJob)}
+            {RenderFields(fieldsJob, editing, editedData, handleEdit,setEditing)}
 
             <h3>Contacto</h3>
-            {renderFields(fieldsContact)}
+            {RenderFields(fieldsContact, editing, editedData, handleEdit,setEditing)}
 
             <h3>Direccion</h3>
-            {renderFields(fieldAdress)}
+            {RenderFields(fieldAdress, editing, editedData, handleEdit,setEditing)}
 
-            {otraDireccion === 'SI' && (
+            {editedData.otraDireccion === 'SI' && (
               <>
                 <h3>Direccion</h3>
-                {renderFields(fieldAdress2)}
+                {RenderFields(fieldAdress2, editing, editedData, handleEdit,setEditing)}
               </>
             )}
 
             <h3>Educacion</h3>
-            {renderFields(education)}
+            {RenderFields(education, editing, editedData, handleEdit,setEditing)}
 
             <h3>Datos bancarios</h3>
-            {renderFields(bankData)}
+            {RenderFields(bankData, editing, editedData, handleEdit,setEditing)}
 
             <h3>Talle de ropa</h3>
-            {renderFields(clothingSize)}
+            {RenderFields(clothingSize, editing, editedData, handleEdit,setEditing)}
 
           </>
         )}
@@ -213,37 +124,37 @@ const StaffDetail = ({ persona }) => {
         {selectedCategory === "fieldsPersonalInformation" && (
           <>
             <h3>Información personal</h3>
-            {renderFields(fieldsPersonalInformation)}
+            {RenderFields(fieldsPersonalInformation, editing, editedData, handleEdit,setEditing)}
           </>
         )}
 
         {selectedCategory === "fieldsJob" && (
           <>
             <h3>Puesto de trabajo</h3>
-            {renderFields(fieldsJob)}
+            {RenderFields(fieldsJob, editing, editedData, handleEdit,setEditing)}
           </>
         )}
 
         {selectedCategory === "fieldsContact" && (
           <>
             <h3>Contacto</h3>
-            {renderFields(fieldsContact)}
+            {RenderFields(fieldsContact, editing, editedData, handleEdit,setEditing)}
           </>
         )}
 
         {selectedCategory === "fieldAdress" && (
           <>
             <h3>Direccion</h3>
-            {renderFields(fieldAdress)}
+            {RenderFields(fieldAdress, editing, editedData, handleEdit,setEditing)}
           </>
         )}
 
         {selectedCategory === "fieldAdress2" && (
           <>
-            {otraDireccion === 'SI' && (
+            {direccion.otraDireccion === 'SI' && (
               <>
                 <h3>Direccion</h3>
-                {renderFields(fieldAdress2)}
+                {RenderFields(fieldAdress2, editing, editedData, handleEdit,setEditing)}
               </>
             )}
           </>
@@ -252,24 +163,23 @@ const StaffDetail = ({ persona }) => {
         {selectedCategory === "education" && (
           <>
             <h3>Educacion</h3>
-            {renderFields(education)}
+            {RenderFields(education, editing, editedData, handleEdit,setEditing)}
           </>
         )}
 
         {selectedCategory === "bankData" && (
           <>
             <h3>Datos bancarios</h3>
-            {renderFields(bankData)}
+            {RenderFields(bankData, editing, editedData, handleEdit,setEditing)}
           </>
         )}
 
         {selectedCategory === "clothingSize" && (
           <>
             <h3>Talle de ropa</h3>
-            {renderFields(clothingSize)}
+            {RenderFields(clothingSize, editing, editedData, handleEdit,setEditing)}
           </>
         )}
-
 
       </div>
       <div className="card-footer">
@@ -290,6 +200,8 @@ const StaffDetail = ({ persona }) => {
       {
         !editing ? <button className="save-btn" onClick={() => setEditing(true)}>Editar</button> : ''
       }
+
+
     </div>
   );
 };

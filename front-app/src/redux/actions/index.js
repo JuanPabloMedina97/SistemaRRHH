@@ -54,16 +54,15 @@ export const createPersonAction = (person) => async (dispatch) => { //action que
     }
 }
 
-export const updatePersonAction = (person) => async (dispatch) => { //action que modifica a la persona ya creada
+export const updatePersonAction = (id, person) => async (dispatch) => { //action que modifica a la persona ya creada
     try {
-        console.log('informacion de la persona', person);
-        const response = await axios.put(`http://localhost:3001/user/${person.legajo}`, person);
+        const response = await axios.put(`http://localhost:3001/user/${id}`, person);
 
         dispatch({
             type: UPDATE_PERSON,
             payload: response.data
         });
-        dispatch(getPersonDetailAction(person.legajo));
+        dispatch(getPersonDetailAction(id));
     } catch (error) {
         console.log(error);
     }
