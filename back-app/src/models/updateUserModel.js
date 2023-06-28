@@ -8,13 +8,13 @@ const updateUser = (data) => {
         const {
             nombre, apellido, dni, cuil,
             legajo, sexo, estadoCivil, edad, nacimiento, lentes, antiGripal, carnetVacuna, tratamientoMedico, medicacion, nombreMedicacion, movilidad,
-            linea, turno, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, sector,
+            linea, turno, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, sector, estadoEmpleado, puesto, rotativo,
             provincia, localidad, cp, calle, numeroCalle, piso, dpto, barrio, detalle, entreCalles, indicacionAdicional, otraDireccion,
             provincia2, cp2, calle2, numeroCalle2, piso2, dpto2, barrio2, detalle2, entreCalles2, indicacionAdicional2,
             numTelefono, numTelefono2, correo, correo2, nombrePariente, numeroPariente, nombrePariente2, numeroPariente2,
             primaria, secundaria, nivelSuperior, cursando, cursos,
             banco, cbu, alias, medioDeCobro, direccionBancaria, direccionBancariaDos, direccionBancariaTres,
-            pantalon, camisa, botin, mameluco, zapatilla, botasGoma, remera, chomba, equipoLluvia, delantal, chaquetaDefensa,
+            pantalon, camisa, botin, mameluco, zapatilla, botasGoma, remera, chomba, equipoLluvia, delantal, chaquetaDefensa, gorra, campera,
             fechaObservacion, descripcion
         } = data;
         console.log("Esta es la data que recibo para actualizar", data);
@@ -34,8 +34,8 @@ const updateUser = (data) => {
                         reject(error);
                     } else {
                         // Actualizar campos en la tabla "puestodetrabajo"
-                        const puestoDeTrabajoSql = `UPDATE puestodetrabajo SET linea = ?, turno = ?, empresa = ?, condicion = ?, tipoDePago = ?, ingreso = ?, alta = ?, baja = ?, categoria = ?, sindicato = ?, solidario = ?, convenio = ?, condicionCitricola = ?, art = ?, carnetSanidad = ? WHERE legajo = ?`;
-                        const puestoDeTrabajoValues = [linea, turno, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, legajo];
+                        const puestoDeTrabajoSql = `UPDATE puestodetrabajo SET linea = ?, turno = ?, empresa = ?, condicion = ?, tipoDePago = ?, ingreso = ?, alta = ?, baja = ?, categoria = ?, sindicato = ?, solidario = ?, convenio = ?, condicionCitricola = ?, art = ?, carnetSanidad = ?, estadoEmpleado = ?, puesto = ?, rotativo = ? WHERE legajo = ?`;
+                        const puestoDeTrabajoValues = [linea, turno, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, estadoEmpleado, puesto, rotativo, legajo];
                         connection.query(puestoDeTrabajoSql, puestoDeTrabajoValues, (error, puestoDeTrabajoResults) => {
                             if (error) {
                                 reject(error);
@@ -70,8 +70,8 @@ const updateUser = (data) => {
                                                                     if (error) {
                                                                         reject(error);
                                                                     } else {
-                                                                        const talleRopaSql = `UPDATE talleropa SET pantalon = ?, camisa = ?, botin = ?, mameluco = ?, zapatilla = ?, botasGoma = ?, remera = ?, chomba = ?, equipoLluvia = ?, delantal = ?, chaquetaDefensa = ?  WHERE legajo = ?`;
-                                                                        const talleRopaValues = [pantalon, camisa, botin, mameluco, zapatilla, botasGoma, remera, chomba, equipoLluvia, delantal, chaquetaDefensa, legajo];
+                                                                        const talleRopaSql = `UPDATE talleropa SET pantalon = ?, camisa = ?, botin = ?, mameluco = ?, zapatilla = ?, botasGoma = ?, remera = ?, chomba = ?, equipoLluvia = ?, delantal = ?, chaquetaDefensa = ?, gorra = ?, campera = ?  WHERE legajo = ?`;
+                                                                        const talleRopaValues = [pantalon, camisa, botin, mameluco, zapatilla, botasGoma, remera, chomba, equipoLluvia, delantal, chaquetaDefensa, gorra, campera, legajo];
                                                                         connection.query(talleRopaSql, talleRopaValues, (error, talleRopaResults) => {
                                                                             if (error) {
                                                                                 reject(error);

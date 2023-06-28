@@ -56,7 +56,7 @@ export const createPersonAction = (person) => async (dispatch) => { //action que
 
 export const updatePersonAction = (person) => async (dispatch) => { //action que modifica a la persona ya creada
     try {
-        console.log('informacion de la persona', person);
+        
         const response = await axios.put(`http://localhost:3001/user/${person.legajo}`, person);
 
         dispatch({
