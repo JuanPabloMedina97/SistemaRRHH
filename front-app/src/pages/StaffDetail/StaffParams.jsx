@@ -14,11 +14,10 @@ const StaffParams = () => {
         dispatch(getPersonDetailAction(id))
     }, [dispatch, id])
 
-    if(isLoading){
+
+    if (isLoading) {
         return <p>Cargando</p>
     }
-
-
 
     return (
         <>

@@ -4,7 +4,7 @@ import { useNavigate, useParams, } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { deletePersonAction, getAllPersonAction, updatePersonAction } from '../../redux/actions';
 import { fieldsPersonalInformation, fieldsJob, fieldsContact, fieldAdress, fieldAdress2, education, bankData, clothingSize, categories } from './fields';
-
+import flattenObject from './flattenObject';
 
 
 const StaffDetail = ({ persona }) => {
@@ -12,34 +12,17 @@ const StaffDetail = ({ persona }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("TODOS");
+  const [editing, setEditing] = useState(false);
+  const [editedData, setEditedData] = useState({...persona});
+  const obj = flattenObject(editedData);
 
+
+
+
+  const [selectedCategory, setSelectedCategory] = useState("TODOS");
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
-
-  
-
-  const { legajo, dni, cuil, nombre, apellido, informacionPersonalDos, puestoDeTrabajo, contacto, direccion, direccion2, educacion, datosBancarios, talleRopa, observacion } = persona;
-  const { sexo, estadoCivil, edad, nacimiento, lentes, antiGripal, carnetVacuna, tratamientoMedicoMedicacion, movilidad } = informacionPersonalDos
-  const { medicacion, nombreMedicacion, tratamientoMedico } = tratamientoMedicoMedicacion;
-  const { sector, linea, turno, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, estadoEmpleado, puesto, rotativo } = puestoDeTrabajo;
-  const { numTelefono, numTelefono2, correo, correo2, pariente, pariente2 } = contacto;
-  const { nombrePariente, numeroPariente } = pariente;
-  const { nombrePariente2, numeroPariente2 } = pariente2;
-  const { barrio, calle, numeroCalle, cp, detalle, dpto, entreCalles, indicacionAdicional, localidad, piso, provincia, otraDireccion } = direccion
-  const { barrio2, calle2, numeroCalle2, cp2, detalle2, dpto2, entreCalles2, indicacionAdicional2, localidad2, piso2, provincia2 } = direccion2
-  const { cursando, cursos, primaria, secundaria } = educacion;
-  const { alias, banco, cbu, direccionBancaria, direccionBancariaDos, direccionBancariaTres, medioDeCobro } = datosBancarios;
-  const { botasGoma, botin, camisa, campera, chaquetaDefensa, chomba, delantal, equipoLluvia, gorra, mameluco, pantalon, remera, zapatilla } = talleRopa;
-  
-
-
-
-
-  const [editing, setEditing] = useState(false);
-  const [editedData, setEditedData] = useState({...persona});
-
 
   const handleEdit = (field, value) => {
     setEditedData({
@@ -77,28 +60,8 @@ const StaffDetail = ({ persona }) => {
 
 
   useEffect(() => {
-    setEditedData({
-      legajo, dni, cuil, nombre, apellido, sexo, estadoCivil, edad, nacimiento, lentes, antiGripal, carnetVacuna, tratamientoMedico, medicacion, nombreMedicacion, movilidad,
-      sector, linea, turno, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, estadoEmpleado, puesto, rotativo,
-      numTelefono, numTelefono2, correo, correo2, pariente, pariente2, nombrePariente, numeroPariente, nombrePariente2, numeroPariente2,
-      barrio, calle, numeroCalle, cp, detalle, dpto, entreCalles, indicacionAdicional, localidad, piso, provincia, otraDireccion,
-      barrio2, calle2, numeroCalle2, cp2, detalle2, dpto2, entreCalles2, indicacionAdicional2, localidad2, piso2, provincia2,
-      cursando, cursos, primaria, secundaria,
-      alias, banco, cbu, direccionBancaria, direccionBancariaDos, direccionBancariaTres, medioDeCobro,
-      botasGoma, botin, camisa, campera, chaquetaDefensa, chomba, delantal, equipoLluvia, gorra, mameluco, pantalon, remera, zapatilla,
-
-    });
-  }, [
-    legajo, dni, cuil, nombre, apellido, sector, sexo, estadoCivil, edad, nacimiento, lentes, antiGripal, carnetVacuna, tratamientoMedico, medicacion, nombreMedicacion, movilidad,
-    linea, turno, empresa, condicion, tipoDePago, ingreso, alta, baja, categoria, convenio, sindicato, solidario, condicionCitricola, art, carnetSanidad, estadoEmpleado, puesto, rotativo,
-    numTelefono, numTelefono2, correo, correo2, pariente, pariente2, nombrePariente, numeroPariente, nombrePariente2, numeroPariente2,
-    barrio, calle, numeroCalle, cp, detalle, dpto, entreCalles, indicacionAdicional, localidad, piso, provincia, otraDireccion,
-    barrio2, calle2, numeroCalle2, cp2, detalle2, dpto2, entreCalles2, indicacionAdicional2, localidad2, piso2, provincia2,
-    cursando, cursos, primaria, secundaria,
-    alias, banco, cbu, direccionBancaria, direccionBancariaDos, direccionBancariaTres, medioDeCobro,
-    botasGoma, botin, camisa, campera, chaquetaDefensa, chomba, delantal, equipoLluvia, gorra, mameluco, pantalon, remera, zapatilla,
-
-  ]);
+    setEditedData({...obj});
+  },[]);
 
 
 
@@ -172,7 +135,7 @@ const StaffDetail = ({ persona }) => {
             <h3>Direccion</h3>
             {renderFields(fieldAdress)}
 
-            {otraDireccion === 'SI' && (
+            {editedData.otraDireccion === 'SI' && (
               <>
                 <h3>Direccion</h3>
                 {renderFields(fieldAdress2)}
@@ -222,7 +185,7 @@ const StaffDetail = ({ persona }) => {
 
         {selectedCategory === "fieldAdress2" && (
           <>
-            {otraDireccion === 'SI' && (
+            {editedData.otraDireccion === 'SI' && (
               <>
                 <h3>Direccion</h3>
                 {renderFields(fieldAdress2)}
