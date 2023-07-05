@@ -47,7 +47,7 @@ const fieldsContact = [
     { label: 'Nombre de pariente', name: 'nombrePariente', disabled: false },
     { label: 'Numero de celular', name: 'numeroPariente', disabled: false },
     { label: 'Nombre de pariente', name: 'nombrePariente2', disabled: false },
-    { label: 'Numero de pariente', name: 'numeroPariente2', disabled: false },
+    { label: 'Numero de celular', name: 'numeroPariente2', disabled: false },
 ];
 
 const fieldAdress = [

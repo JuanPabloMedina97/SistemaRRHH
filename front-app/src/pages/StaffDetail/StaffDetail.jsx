@@ -5,16 +5,16 @@ import { useDispatch } from 'react-redux';
 import { deletePersonAction, getAllPersonAction, updatePersonAction } from '../../redux/actions';
 import { fieldsPersonalInformation, fieldsJob, fieldsContact, fieldAdress, fieldAdress2, education, bankData, clothingSize, categories } from './fields';
 import flattenObject from './flattenObject';
-
+import RenderFields from './RenderFields';
 
 const StaffDetail = ({ persona }) => {
 
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [editing, setEditing] = useState(false);
-  const [editedData, setEditedData] = useState({...persona});
-  const obj = flattenObject(editedData);
+  const { id } = useParams(); //traigo el id del params
+  const dispatch = useDispatch(); //preparamos el dispatch para empezar a usarlo
+  const navigate = useNavigate(); 
+  const [editing, setEditing] = useState(false); //modo editar en falso
+  const [editedData, setEditedData] = useState({...persona}); //traemos el objeto original y lo copiamos en editedData para poder editarlo sin modificar el original directamente
+  const obj = flattenObject(editedData); //con la funcion flattenObjet convertimos el objeto original en objeto plano para poder renderizar bien la data de la lista de la persona
 
 
 
@@ -69,6 +69,7 @@ const StaffDetail = ({ persona }) => {
   const renderFields = (fields) => {
     return fields.map((field) => (
       <div className="field" key={field.name}>
+        
         <label>{field.label}:</label>
         {editing ? (
           field.options ? (
@@ -216,6 +217,7 @@ const StaffDetail = ({ persona }) => {
         )}
 
       </div>
+
       <div className="card-footer">
         {editing && (
           <div className="edit-buttons">
