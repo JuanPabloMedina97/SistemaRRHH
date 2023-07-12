@@ -24,7 +24,7 @@ export const getAllPersonAction = () => async (dispatch, getState) => { //action
     }
 }
 
-export const getPersonDetailAction = (legajo) => async (dispatch, getState) => { //action que trae el detalle de la persona por su legajo
+export const getPersonDetailAction = (legajo) => async (dispatch) => { //action que trae el detalle de la persona por su legajo
 
     axios(`http://localhost:3001/user/${legajo}`)
         .then(response => {

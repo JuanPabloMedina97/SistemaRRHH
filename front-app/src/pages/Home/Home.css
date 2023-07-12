@@ -62,4 +62,10 @@
     font-size: 18px;
     font-weight: bold;
   }
+
+  .icon-link.disabled {
+    color: gray;
+    pointer-events: none;
+  }
+  
   
