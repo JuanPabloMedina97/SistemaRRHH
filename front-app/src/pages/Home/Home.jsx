@@ -12,9 +12,9 @@ import './Home.css';
 const Home = () => {
 
   const icons = [
-    { path: '/user', icon: <BsFillPeopleFill fontSize={'50px'}/>, name: 'Personal' },
-    { path: '/pagina2', icon: <BsFillClipboardCheckFill fontSize={'50px'}/>, name: 'Asistencia' },
-    { path: '/hys', icon: <BsShieldPlus fontSize={'50px'}/>, name: 'HyS' },
+    { path: '/home/user', icon: <BsFillPeopleFill fontSize={'50px'}/>, name: 'Personal' },
+    { path: '/home/pagina2', icon: <BsFillClipboardCheckFill fontSize={'50px'}/>, name: 'Asistencia' },
+    { path: '/home/hys', icon: <BsShieldPlus fontSize={'50px'}/>, name: 'HyS' },
     { path: '/pagina4', icon: 'fa fa-film', name: 'RSE' },
     { path: '/pagina5', icon: <FaLaptopMedical fontSize={'50px'}/>, name: 'Servicio Medico' },
     { path: '/pagina6', icon: <GrDocumentPerformance fontSize={'50px'}/>, name: 'Desempeño' },

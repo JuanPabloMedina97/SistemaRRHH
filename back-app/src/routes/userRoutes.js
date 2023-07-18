@@ -7,7 +7,7 @@ const empleadosController = require('../controllers/userController');
 
 
 
-userRoutes.get('/user', async (req, res) => { //ruta para obtener los usuarios
+userRoutes.get('/home/user', async (req, res) => { //ruta para obtener los usuarios
     try {
         const result = await empleadosController.getUsers();
         res.json(result)
@@ -17,7 +17,7 @@ userRoutes.get('/user', async (req, res) => { //ruta para obtener los usuarios
     }
 });
 
-userRoutes.get('/user/:id', async (req, res) => {
+userRoutes.get('/home/user/:id', async (req, res) => {
     try {
       const { id } = req.params;
       const user = await empleadosController.getUserDetail(id);
@@ -32,7 +32,7 @@ userRoutes.get('/user/:id', async (req, res) => {
     }
   });
 
-userRoutes.post('/user', async (req, res) => { //ruta para crear un usuario
+userRoutes.post('/home/user', async (req, res) => { //ruta para crear un usuario
     try {
         const newUser = req.body;
         const createdUser = await usuario.createUser(newUser);
@@ -43,8 +43,8 @@ userRoutes.post('/user', async (req, res) => { //ruta para crear un usuario
     }
 });
 
-userRoutes.put('/user/:id', empleadosController.updateUser); //ruta para actualizar un usuario
+userRoutes.put('/home/user/:id', empleadosController.updateUser); //ruta para actualizar un usuario
 
-userRoutes.delete('/user/:id', empleadosController.deleteUser);
+userRoutes.delete('/home/user/:id', empleadosController.deleteUser);
 
 module.exports = userRoutes;

@@ -1,6 +1,5 @@
 .navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
   padding: 0.5rem 1rem;
@@ -14,6 +13,12 @@
 
 .navbar-menu {
   flex-basis: auto;
+}
+
+.navbar-mid {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
 }
 
 .navbar-end {
@@ -40,4 +45,9 @@
 
 .logo {
   width: 150px;
+}
+
+.logout-btn {
+  background: red;
+  color: white;
 }

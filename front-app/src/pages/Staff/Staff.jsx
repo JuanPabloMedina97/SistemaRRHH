@@ -62,32 +62,32 @@ const Staff = () => {
 
             <tr key={p.legajo}>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <Link to={`/home/user/${p.legajo}`} className='link-table'>
                   {i + 1}
                 </Link>
               </td>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <Link to={`/home/user/${p.legajo}`} className='link-table'>
                   {p.nombre}
                 </Link>
               </td>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <Link to={`/home/user/${p.legajo}`} className='link-table'>
                   {p.apellido}
                 </Link>
               </td>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <Link to={`/home/user/${p.legajo}`} className='link-table'>
                   {p.dni}
                 </Link>
               </td>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <Link to={`/home/user/${p.legajo}`} className='link-table'>
                   {p.legajo}
                 </Link>
               </td>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <Link to={`/home/user/${p.legajo}`} className='link-table'>
                   {p.sector}
                 </Link>
               </td>

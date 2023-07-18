@@ -47,14 +47,14 @@ const StaffDetail = ({ persona }) => {
       dispatch(deletePersonAction(id));
       dispatch(getAllPersonAction())
         .then(() => {
-          navigate('/user');
+          navigate('/home/user');
         });
 
     }
   };
 
   const handleBack = () => {
-    navigate("/user");
+    navigate("/home/user");
   };
 
 

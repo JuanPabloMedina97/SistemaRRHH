@@ -3,14 +3,15 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import staffReducer from '../reducer';
+import userReducer from '../reducer';
 
 const rootReducer = combineReducers({
     person: staffReducer,
-    personDetail: staffReducer,
+    user: userReducer
 });
 
 export default function generateStore() {
-    const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk) ) );
+    const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
     return store;
 }
 

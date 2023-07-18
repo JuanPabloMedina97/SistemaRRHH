@@ -28,18 +28,6 @@ function getUserDetail(id) {
     LEFT JOIN talleropa tr ON e.legajo = tr.legajo
     LEFT JOIN observaciones ob ON e.legajo = ob.legajo
     WHERE e.legajo = ${id}`
-
-
-
-    // // const query = 'SELECT * FROM empleados';
-    // connection.query(query, (err, results) => {
-    //   if (err) {
-    //     console.log("Error al obtener los empleados: ", err);
-    //     reject(err);
-    //     return;
-    //   }
-    //   resolve(results);
-    // });
     connection.query(query, (err, results) => {
       if (err) {
         console.log("Error al obtener los empleados: ", err);

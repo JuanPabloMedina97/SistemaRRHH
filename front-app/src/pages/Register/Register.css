@@ -1,0 +1,88 @@
+.container-register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 135vh;
+}
+
+.registration-box {
+  width: 400px;
+  padding: 20px;
+  background: #f0f2f5;
+  border-radius: 8px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 96%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 42%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.create-user-btn,
+.cancel-create-user-btn {
+  width: 100%;
+  padding: 10px;
+  background: #1877f2;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.cancel-btn {
+  background: red;
+  width: 50%;
+}
+
+.create-user-btn:hover {
+  background: #14568f;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
