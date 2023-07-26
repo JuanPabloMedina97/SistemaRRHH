@@ -11,10 +11,12 @@ export const UPDATE_PERSON = "UPDATE_PERSON";
 export const DELETE_PERSON = "DELETE_PERSON";
 export const CREATE_USER = "CREATE_USER";
 export const LOGIN_USER = "LOGIN_USER";
+export const STATUS_USER = "STATUS_USER";
+export const LOGOUT_USER = "LOGOUT_USER";
 
 
 //STAFF
-export const getAllPersonAction = () => async (dispatch, getState) => { //action que trae la lista de personas
+export const getAllPersonAction = () => async (dispatch) => { //action que trae la lista de personas
     try {
         const res = await axios.get("http://localhost:3001/home/user");
         dispatch({
@@ -31,7 +33,6 @@ export const getPersonDetailAction = (legajo) => async (dispatch) => { //action 
     axios(`http://localhost:3001/home/user/${legajo}`)
         .then(response => {
             const result = response.data;
-
             dispatch({
                 type: GET_PERSON_DETAIL,
                 payload: result
@@ -58,7 +59,7 @@ export const createPersonAction = (person) => async (dispatch) => { //action que
 
 export const updatePersonAction = (person) => async (dispatch) => { //action que modifica a la persona ya creada
     try {
-
+        console.log("Aqui se hace el put");
         const response = await axios.put(`http://localhost:3001/home/user/${person.legajo}`, person);
 
         dispatch({
@@ -91,7 +92,8 @@ export const deletePersonAction = (legajo) => {
 //USER
 export const createUserAction = (user) => async (dispatch) => {
     try {
-        const response = await axios.post('Aqui va la ruta que se configura en el back, para el servidor', user);
+        console.log(user);
+        const response = await axios.post('http://localhost:3001/auth/register', user);
         console.log('Usuario creado con exito.', response.data);
         dispatch({
             type: CREATE_USER,
@@ -99,21 +101,51 @@ export const createUserAction = (user) => async (dispatch) => {
         })
         console.log("Usuario creado desde el action", user);
     } catch (error) {
-        console.log('Error al crear el usuario: ', error);
+        console.log('Error al crear el usuario: ', error.response.data.message);
     }
 };
 
 export const getLoginAction = (user) => async (dispatch) => {
 
     try {
-        const response = await axios.get('aqui hace la consulta de la base de datos para logearse', user);
+
+        const response = await axios.post('http://localhost:3001/auth/', user);
         const data = response.data;
-        console.log("Usuario desde el action", user);
+        console.log("Usuario desde el action", data);
         dispatch({
-            type: GET_USER,
+            type: LOGIN_USER,
             payload: data
         })
+        return data;
     } catch (error) {
-        console.log('Usuario o contraseña incorrectas');
+        throw new error('Credenciales invalidas')
+
+    }
+}
+
+export const getStatusUser = (user) => async (dispatch) => {
+    try {
+
+        const res = await axios.get(`http://localhost:3001/auth/isactive/${user}`);
+        
+        dispatch({
+            type: STATUS_USER,
+            payload: res.data
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const logoutUserAction = (user) => async (dispatch) => {
+    try {
+        console.log(user);
+        const res = await axios.put(`http://localhost:3001/auth/logout/${user}`, user)
+        dispatch({
+            type: LOGOUT_USER,
+            payload: res.data
+        })
+    } catch (error) {
+        console.log(error);
     }
 }

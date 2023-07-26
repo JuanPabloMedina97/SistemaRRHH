@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import './Staff.css';
+import { useNavigate } from 'react-router-dom';
+import styles from './Staff.module.css';
 import NewEmployee from './NewEmployee/NewEmployee';
 import Swal from 'sweetalert2';
 
@@ -12,6 +12,7 @@ const Staff = () => {
 
   const dispatch = useDispatch();
   const personal = useSelector(store => store.person.person); //traemos el estado global del store
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("getAllPersonAction called");
@@ -36,9 +37,14 @@ const Staff = () => {
       .includes(filter.toLowerCase())
   );
 
+  const handleNavigate = (legajo) => {
+    navigate(`/home/user/${legajo}`);
+    window.location.reload()
+  }
+
 
   return (
-    <div className="personal-list">
+    <div className={styles.personalList}>
       <NewEmployee personal={personal} /> {/*Modal para agregar empleado nuevo */}
       <input
         type="text"
@@ -62,34 +68,35 @@ const Staff = () => {
 
             <tr key={p.legajo}>
               <td>
-                <Link to={`/home/user/${p.legajo}`} className='link-table'>
+                {/* <Link to={`/home/user/${p.legajo}`} className='link-table'>
                   {i + 1}
-                </Link>
+                </Link> */}
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>{i + 1}</button>
               </td>
               <td>
-                <Link to={`/home/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {p.nombre}
-                </Link>
+                </button>
               </td>
               <td>
-                <Link to={`/home/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {p.apellido}
-                </Link>
+                </button>
               </td>
               <td>
-                <Link to={`/home/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {p.dni}
-                </Link>
+                </button>
               </td>
               <td>
-                <Link to={`/home/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {p.legajo}
-                </Link>
+                </button>
               </td>
               <td>
-                <Link to={`/home/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {p.sector}
-                </Link>
+                </button>
               </td>
             </tr>
           ))}

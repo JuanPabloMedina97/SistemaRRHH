@@ -5,8 +5,6 @@ import {
     CREATE_PERSON,
     UPDATE_PERSON,
     DELETE_PERSON,
-    CREATE_USER,
-    LOGIN_USER
 } from '../actions';
 
 
@@ -14,25 +12,6 @@ const initialState = {
     person: [],
     personDetail: [],
     isLoading: true,
-}
-
-const userState = {
-    user: [],
-}
-
-export const userReducer = (state = userState, action) => {
-    switch (action.type) {
-        case CREATE_USER:
-            return {
-                ...state, user: [...state.user, action.payload]
-            }
-        case LOGIN_USER:
-            return {
-                ...state, user: action.payload
-            }
-        default:
-            return state;
-    }
 }
 
 

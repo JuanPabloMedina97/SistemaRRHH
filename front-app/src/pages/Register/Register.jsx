@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
-import './Register.css';
+import { useState } from 'react';
+import styles from './Register.module.css'
 import { useNavigate } from 'react-router-dom'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
 import { createUserAction } from '../../redux/actions';
-
+import Swal from 'sweetalert2'
 
 
 function Registration() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     nombre: '',
     apellido: '',
     legajo: '',
     usuario: '',
     correo: '',
     contrasena: '',
+    tipoDeUsuario: '',
     confirmContrasena: '',
-    tipoDeUsuario: ''
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -50,26 +52,73 @@ function Registration() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    const loadingAlert = Swal.fire({
+      title: 'Creando usuario...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    })
 
-    if (formData.contrasena !== formData.confirmContrasena) {
-      setPasswordsMatch(false);
-      return;
+    try {
+      if (formData.contrasena !== formData.confirmContrasena) {
+        setPasswordsMatch(false);
+        return;
+      }
+
+      if (!formData.correo.endsWith('@acheral.com.ar')) {
+        setIsDomainValid(false);
+        return;
+      }
+
+      setPasswordsMatch(true);
+      setIsDomainValid(true);
+
+      // const formDataToSend = { ...formData };
+      delete formData.confirmContrasena;
+
+      dispatch(createUserAction(formData));
+
+      formData.contrasena = ''
+      formData.confirmContrasena = ''
+
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Éxito',
+        text: 'Usuario creado correctamente.',
+      });
+
+      setFormData(initialFormData);
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Ha ocurrido un error al crear el usuario. Por favor, inténtalo nuevamente.',
+      });
+    } finally {
+      loadingAlert.close();
     }
-
-    if (!formData.correo.endsWith('@acheral.com.ar')) {
-      setIsDomainValid(false);
-      return;
-    }
-
-    setPasswordsMatch(true);
-    setIsDomainValid(true);
-    dispatch(createUserAction(formData));
   };
 
   const handleCancel = () => {
-    navigate('/');
+    const loadingPage = Swal.fire({
+      title: 'Cargando...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    try {
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    } finally {
+      loadingPage.close();
+    }
   };
 
   const handleTogglePassword = () => {
@@ -83,13 +132,13 @@ function Registration() {
   const capitalizeFirstLetter = (str) => {
     return str.replace(/\b\w/g, (match) => match.toUpperCase());
   };
-  
+
   return (
-    <div className="container-register">
-      <div className="registration-box">
+    <div className={styles.containerRegister}>
+      <div className={styles.registrationBox}>
         <h2>Registro de usuario</h2>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="nombre">Nombre:</label>
             <input
               type="text"
@@ -100,7 +149,7 @@ function Registration() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="apellido">Apellido:</label>
             <input
               type="text"
@@ -111,7 +160,7 @@ function Registration() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="legajo">Legajo:</label>
             <input
               type="number"
@@ -122,7 +171,7 @@ function Registration() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="usuario">Nombre de usuario:</label>
             <input
               type="text"
@@ -134,7 +183,7 @@ function Registration() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="correo">Correo ACHERAL:</label>
             <input
               type="email"
@@ -145,12 +194,12 @@ function Registration() {
               required
             />
             {!isDomainValid && (
-              <p className="error-message">El correo debe ser de dominio acheral.com.ar</p>
+              <p className={styles.errorMessage}>El correo debe ser de dominio acheral.com.ar</p>
             )}
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="contrasena">Contraseña:</label>
-            <div className="password-field">
+            <div className={styles.passwordField}>
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="contrasena"
@@ -161,22 +210,22 @@ function Registration() {
               />
               {showPassword ? (
                 <AiFillEyeInvisible
-                  className="password-toggle"
+                  className={styles.passwordToggle}
                   onClick={handleTogglePassword}
                   fontSize={'25px'}
                 />
               ) : (
                 <AiFillEye
-                  className="password-toggle"
+                  className={styles.passwordToggle}
                   onClick={handleTogglePassword}
                   fontSize={'25px'}
                 />
               )}
             </div>
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="confirm-contrasena">Repetir contraseña:</label>
-            <div className="password-field">
+            <div className={styles.passwordField}>
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
                 id="confirm-contrasena"
@@ -187,23 +236,23 @@ function Registration() {
               />
               {showConfirmPassword ? (
                 <AiFillEyeInvisible
-                  className="password-toggle"
+                  className={styles.passwordToggle}
                   onClick={handleToggleConfirmPassword}
                   fontSize={'25px'}
                 />
               ) : (
                 <AiFillEye
-                  className="password-toggle"
+                  className={styles.passwordToggle}
                   onClick={handleToggleConfirmPassword}
                   fontSize={'25px'}
                 />
               )}
             </div>
             {!passwordsMatch && (
-              <p className="error-message">Las contraseñas no coinciden.</p>
+              <p className={styles.errorMessage}>Las contraseñas no coinciden.</p>
             )}
           </div>
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label htmlFor="tipoDeUsuario">Tipo de usuario:</label>
             <select
               id="tipoDeUsuario"
@@ -220,11 +269,11 @@ function Registration() {
               <option value="user">Usuario</option>
             </select>
           </div>
-          <div className="button-container">
-            <button type="submit" className="create-user-btn">
+          <div className={styles.buttonContainer}>
+            <button type="submit" className={styles.createUserBtn}>
               Crear usuario
             </button>
-            <button onClick={handleCancel} className="cancel-create-user-btn cancel-btn">
+            <button onClick={handleCancel} className={`${styles.cancelCreateUserBtn} ${styles.cancelBtn}`}>
               Cancelar
             </button>
           </div>

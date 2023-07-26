@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import './StaffDetail.css';
+import styles from './StaffDetail.module.css';
 import { useNavigate, useParams, } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { deletePersonAction, getAllPersonAction, updatePersonAction } from '../../redux/actions';
 import { fieldsPersonalInformation, fieldsJob, fieldsContact, fieldAdress, fieldAdress2, education, bankData, clothingSize, categories } from './fields';
 import flattenObject from './flattenObject';
-import RenderFields from './RenderFields';
 
 const StaffDetail = ({ persona }) => {
 
@@ -15,7 +14,7 @@ const StaffDetail = ({ persona }) => {
   const [editing, setEditing] = useState(false); //modo editar en falso
   const [editedData, setEditedData] = useState({...persona}); //traemos el objeto original y lo copiamos en editedData para poder editarlo sin modificar el original directamente
   const obj = flattenObject(editedData); //con la funcion flattenObjet convertimos el objeto original en objeto plano para poder renderizar bien la data de la lista de la persona
-
+ 
 
 
 
@@ -39,6 +38,7 @@ const StaffDetail = ({ persona }) => {
   const handleSave = () => {
     setEditing(false);
     dispatch(updatePersonAction(editedData));
+    
   };
 
   const handleDelete = () => {
@@ -61,14 +61,13 @@ const StaffDetail = ({ persona }) => {
 
   useEffect(() => {
     setEditedData({...obj});
+    
   },[]);
-
-
 
 
   const renderFields = (fields) => {
     return fields.map((field) => (
-      <div className="field" key={field.name}>
+      <div className={styles.field} key={field.name}>
         
         <label>{field.label}:</label>
         {editing ? (
@@ -106,10 +105,10 @@ const StaffDetail = ({ persona }) => {
 
 
   return (
-    <div className="card">
-      <div className="card-header">
+    <div className={styles.card}>
+      <div className={styles.cardHeader}>
         <h2>Detalles del empleado</h2>
-        <button className="close-btn" onClick={() => handleBack()}>X</button>
+        <button className={styles.closeBtn} onClick={() => handleBack()}>X</button>
       </div>
       <select value={selectedCategory} onChange={handleCategoryChange}>
         <option value="TODOS">Seleccionar categoría</option>
@@ -120,7 +119,7 @@ const StaffDetail = ({ persona }) => {
         ))}
       </select>
 
-      <div className="card-body">
+      <div className={styles.cardBody}>
 
         {selectedCategory === "TODOS" && (
           <>
@@ -218,23 +217,23 @@ const StaffDetail = ({ persona }) => {
 
       </div>
 
-      <div className="card-footer">
+      <div className={styles.cardFooter}>
         {editing && (
-          <div className="edit-buttons">
-            <button className="cancel-btn" onClick={handleDelete}>
+          <div className={styles.editButtons}>
+            <button className={styles.cancelBtn} onClick={handleDelete}>
               Eliminar empleado
             </button>
-            <button className="save-btn" onClick={handleSave}>
+            <button className={styles.saveBtn} onClick={handleSave}>
               Guardar cambios
             </button>
-            <button className="cancel-btn" onClick={handleCancel}>
+            <button className={styles.cancelBtn} onClick={handleCancel}>
               Cancelar
             </button>
           </div>
         )}
       </div>
       {
-        !editing ? <button className="save-btn" onClick={() => setEditing(true)}>Editar</button> : ''
+        !editing ? <button className={"save-btn"} onClick={() => setEditing(true)}>Editar</button> : ''
       }
     </div>
   );

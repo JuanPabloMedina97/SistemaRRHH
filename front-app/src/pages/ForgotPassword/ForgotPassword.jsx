@@ -1,16 +1,13 @@
 import { useState } from 'react'
-import './ForgotPassword.css'
+import styles from './ForgotPassword.module.css'
 import { useNavigate } from 'react-router-dom'
 
 
 const ForgotPassword = () => {
-  const [emailOrUsername, setEmailOrUsername] = useState('');
   const [legajo, setLegajo] = useState('');
   const navigate = useNavigate();
 
-  const handleEmailOrUsernameChange = (event) => {
-    setEmailOrUsername(event.target.value);
-  };
+  
 
   const handleLegajoChange = (event) => {
     setLegajo(event.target.value);
@@ -21,16 +18,12 @@ const ForgotPassword = () => {
 
     // Convertir los datos en un objeto
     const formData = {
-      emailOrUsername,
       legajo
     };
 
     // Aquí puedes realizar la lógica de envío del formulario
     // como enviar una solicitud al servidor para recuperar la contraseña
     console.log(formData);
-
-    // Reiniciar los campos del formulario después de enviarlo
-    setEmailOrUsername('');
     setLegajo('');
   };
 
@@ -39,19 +32,9 @@ const ForgotPassword = () => {
   };
 
   return (
-    <form className="password-recovery-form" onSubmit={handleSubmit}>
+    <form className={styles.passwordRecoveryForm} onSubmit={handleSubmit}>
       <h2>Recuperacion de contraseña</h2>
-      <div className="form-group">
-        <label htmlFor="emailOrUsername">Correo o Usuario:</label>
-        <input
-          type="text"
-          id="emailOrUsername"
-          value={emailOrUsername}
-          onChange={handleEmailOrUsernameChange}
-          required
-        />
-      </div>
-      <div className="form-group">
+      <div className={styles.formGroup}>
         <label htmlFor="studentId">Legajo:</label>
         <input
           type="text"
@@ -61,7 +44,7 @@ const ForgotPassword = () => {
           required
         />
       </div>
-      <div className="form-actions">
+      <div className={styles.formActions}>
         <button type="submit">Enviar</button>
         <button type="button" onClick={handleCancel}>Cancelar</button>
       </div>

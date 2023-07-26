@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import './NewEmployee.css';
+import styles from './NewEmployee.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { createPersonAction } from '../../../redux/actions';
 
@@ -68,12 +68,12 @@ const NewEmployee = () => {
 
     return (
         <>
-            <button className='btn-add' onClick={toggleModal}>Agregar empleado</button>
+            <button className={styles.btnAdd} onClick={toggleModal}>Agregar empleado</button>
             {showModal && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="modal-close" onClick={toggleModal}>
-                            &times;
+                <div className={styles.modal}>
+                    <div className={styles.modalContent}>
+                        <span className={styles.modalClose} onClick={toggleModal}>
+                           X
                         </span>
                         <form onSubmit={handleSubmit}>
                             <label htmlFor="nombre">Nombre:</label>
@@ -105,7 +105,7 @@ const NewEmployee = () => {
                                 <option value='Recursos Humanos'>Recursos Humanos</option>
                             </select>
 
-                            <div className="modal-buttons">
+                            <div className={styles.modalButtons}>
                                 <button type="button" onClick={toggleModal}>
                                     Cancelar
                                 </button>

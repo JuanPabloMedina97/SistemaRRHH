@@ -12,14 +12,7 @@ import Staff from "../pages/Staff/Staff";
 import StaffParams from "../pages/StaffDetail/StaffParams";
 import Register from "../pages/Register/Register";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
-
-
-// const isAuthenticated = () => {
-//     // Lógica para verificar si el usuario está autenticado
-//     // Devuelve true si el usuario está autenticado, false en caso contrario
-//     // Puedes implementar tu propia lógica de autenticación aquí
-//     return true /* true si el usuario está autenticado, false en caso contrario */;
-// };
+import StaffDetail from "../pages/StaffDetail/StaffDetail";
 
 
 const router = createBrowserRouter([
@@ -30,7 +23,7 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Login />, //aqui iria el login
+                element: <Login />, 
             },
             {
                 path: "/register",
@@ -49,13 +42,15 @@ const router = createBrowserRouter([
                         element: <Home />
                     },
                     {
-                        path: "/home/user",
+                        path: "user",
                         element: <Staff />,
                     },
                     {
-                        path: "/home/user/:id",
+                        path: "user/:id",
                         element: <StaffParams />,
+
                     },
+
                 ]
             }
 
