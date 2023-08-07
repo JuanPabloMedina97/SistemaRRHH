@@ -4,7 +4,7 @@ import { useNavigate, useParams, } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { deletePersonAction, getAllPersonAction, updatePersonAction } from '../../redux/actions';
 import { fieldsPersonalInformation, fieldsJob, fieldsContact, fieldAdress, fieldAdress2, education, bankData, clothingSize, categories } from './fields';
-import flattenObject from './flattenObject';
+
 
 const StaffDetail = ({ persona }) => {
 
@@ -13,7 +13,7 @@ const StaffDetail = ({ persona }) => {
   const navigate = useNavigate(); 
   const [editing, setEditing] = useState(false); //modo editar en falso
   const [editedData, setEditedData] = useState({...persona}); //traemos el objeto original y lo copiamos en editedData para poder editarlo sin modificar el original directamente
-  const obj = flattenObject(editedData); //con la funcion flattenObjet convertimos el objeto original en objeto plano para poder renderizar bien la data de la lista de la persona
+  
  
 
 
@@ -28,11 +28,6 @@ const StaffDetail = ({ persona }) => {
       ...editedData,
       [field]: value,
     });
-  };
-
-  const handleCancel = () => {
-    setEditing(false);
-    window.location.reload();
   };
 
   const handleSave = () => {
@@ -57,12 +52,12 @@ const StaffDetail = ({ persona }) => {
     navigate("/home/user");
   };
 
-
+  
 
   useEffect(() => {
-    setEditedData({...obj});
+    setEditedData({ ...persona });
     
-  },[]);
+  }, [persona]);
 
 
   const renderFields = (fields) => {
@@ -226,14 +221,14 @@ const StaffDetail = ({ persona }) => {
             <button className={styles.saveBtn} onClick={handleSave}>
               Guardar cambios
             </button>
-            <button className={styles.cancelBtn} onClick={handleCancel}>
+            <button className={styles.cancelBtn} onClick={() => setEditing(false)}>
               Cancelar
             </button>
           </div>
         )}
       </div>
       {
-        !editing ? <button className={"save-btn"} onClick={() => setEditing(true)}>Editar</button> : ''
+        !editing ? <button className={styles.saveBtn} onClick={() => setEditing(true)}>Editar</button> : ''
       }
     </div>
   );

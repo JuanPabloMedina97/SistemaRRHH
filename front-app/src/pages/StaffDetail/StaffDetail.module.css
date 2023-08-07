@@ -1,6 +1,6 @@
 .card {
-  position: fixed;
-  top: 58%;
+  position: absolute;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
@@ -49,16 +49,20 @@
 .field label {
   font-weight: bold;
   margin-right: 10px;
-  
 }
 
 .field input {
   flex-grow: 1;
   padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .field div {
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cardFooter {
@@ -93,11 +97,10 @@
   opacity: 0.8;
 }
 
-
-/* Estilos generales del select */
 .selectContainer {
   position: relative;
   width: 200px;
+  margin-bottom: 10px;
 }
 
 select {
@@ -113,7 +116,7 @@ select {
   padding: 10px;
   font-size: 14px;
   color: #333;
-  width: 100%;
+  width: 100%; /* Ancho del select al 100% */
   cursor: pointer;
 }
 

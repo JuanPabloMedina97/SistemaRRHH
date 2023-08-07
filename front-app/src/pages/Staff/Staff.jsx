@@ -7,31 +7,30 @@ import Swal from 'sweetalert2';
 
 import { getAllPersonAction } from '../../redux/actions';
 
-
 const Staff = () => {
-
   const dispatch = useDispatch();
-  const personal = useSelector(store => store.person.person); //traemos el estado global del store
+  const personal = useSelector(store => store.person.person);
   const navigate = useNavigate();
 
   useEffect(() => {
     console.log("getAllPersonAction called");
     Swal.showLoading();
 
-    dispatch(getAllPersonAction()).then(() => {
-      Swal.close();
-    }).catch(() => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Ha ocurrido un error al cargar los empleados',
+    dispatch(getAllPersonAction())
+      .then(() => {
+        Swal.close();
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ha ocurrido un error al cargar los empleados',
+        });
       });
-    })
-  }, [])
-
+  }, []);
 
   const [filter, setFilter] = useState('');
-  const filteredPersonal = personal.filter((p) => //funcion para filtrar personas
+  const filteredPersonal = personal.filter((p) =>
     `${p.nombre} ${p.apellido} ${p.dni} ${p.legajo} ${p.sector}`
       .toLowerCase()
       .includes(filter.toLowerCase())
@@ -39,13 +38,11 @@ const Staff = () => {
 
   const handleNavigate = (legajo) => {
     navigate(`/home/user/${legajo}`);
-    window.location.reload()
-  }
-
+  };
 
   return (
     <div className={styles.personalList}>
-      <NewEmployee personal={personal} /> {/*Modal para agregar empleado nuevo */}
+      <NewEmployee personal={personal} />
       <input
         type="text"
         placeholder="Busqueda"
@@ -65,13 +62,11 @@ const Staff = () => {
         </thead>
         <tbody>
           {filteredPersonal.map((p, i) => (
-
             <tr key={p.legajo}>
               <td>
-                {/* <Link to={`/home/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {i + 1}
-                </Link> */}
-                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>{i + 1}</button>
+                </button>
               </td>
               <td>
                 <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>

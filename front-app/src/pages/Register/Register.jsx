@@ -106,7 +106,7 @@ function Registration() {
 
   const handleCancel = () => {
     const loadingPage = Swal.fire({
-      title: 'Cargando...',
+      title: 'Cancelando...',
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
