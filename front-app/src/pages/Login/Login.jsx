@@ -34,11 +34,13 @@ function Login() {
 
     try {
       const loginData = await dispatch(getLoginAction(user));
+      console.log("ASDASD", loginData);
       if (loginData.isActive === 1) {
         localStorage.setItem('Status', 1);
         localStorage.setItem('User', username)
         localStorage.setItem('Name', loginData.nombre)
         navigate('/home')
+        
       }
     } catch (error) {
       console.log("Error");

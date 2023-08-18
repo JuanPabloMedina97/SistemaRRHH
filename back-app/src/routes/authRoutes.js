@@ -40,7 +40,7 @@ router.post('/register', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const { username, password } = req.body;
-        console.log(req.body);
+        
 
         //se busca el usuario en la base de datos
         const [users] = await connection.promise().query(
@@ -63,13 +63,13 @@ router.post('/', async (req, res) => {
         }
 
         await connection.promise().query(
-            'UPDATE usuarios SET isActive = 1 WHERE usuario = ?',
-            [username]
+            'UPDATE usuarios SET isActive = 1 WHERE usuario = ? OR correo = ?',
+            [username, username]
         )
 
-        console.log(user);
+        
 
-        return res.status(200).json({ message: 'Inicio de sesion exitoso', nombre: user.nombre, usuario: user.usuario, isActive: user.isActive });
+        return res.status(200).json({ message: 'Inicio de sesion exitoso', nombre: user.nombre, usuario: user.usuario, isActive: 1 });
     } catch (error) {
         console.error('Error en el inicio de sesion: ', error)
         return res.status(500).json({ messaje: 'Error en el inicio de sesion' })
