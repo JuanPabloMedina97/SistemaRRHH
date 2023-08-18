@@ -1,24 +1,27 @@
 import { useEffect, useState } from 'react';
-import './StaffDetail.css';
+import styles from './StaffDetail.module.css';
 import { useNavigate, useParams, } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { deletePersonAction, getAllPersonAction, updatePersonAction, getPersonDetailAction } from '../../redux/actions';
-import { fieldsPersonalInformation, fieldsJob, fieldAdress, fieldAdress2, fieldsContact, education, bankData, clothingSize, categories } from './Fields'
-import RenderFields from './RenderFields';
-
+import { deletePersonAction, getAllPersonAction, updatePersonAction } from '../../redux/actions';
+import { fieldsPersonalInformation, fieldsJob, fieldsContact, fieldAdress, fieldAdress2, education, bankData, clothingSize, categories } from './fields';
 
 
 const StaffDetail = ({ persona }) => {
 
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const {direccion} = persona;
+  const { id } = useParams(); //traigo el id del params
+  const dispatch = useDispatch(); //preparamos el dispatch para empezar a usarlo
+  const navigate = useNavigate(); 
+  const [editing, setEditing] = useState(false); //modo editar en falso
+  const [editedData, setEditedData] = useState({...persona}); //traemos el objeto original y lo copiamos en editedData para poder editarlo sin modificar el original directamente
   
+ 
 
-  const [editing, setEditing] = useState(false);
-  const [editedData, setEditedData] = useState({});
+
+
   const [selectedCategory, setSelectedCategory] = useState("TODOS");
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
 
   const handleEdit = (field, value) => {
     setEditedData({
@@ -29,17 +32,8 @@ const StaffDetail = ({ persona }) => {
 
   const handleSave = () => {
     setEditing(false);
-    console.log("ID", id);
-    console.log("DATA MODIFICADA", editedData);
-    dispatch(updatePersonAction(id, editedData))
-      .then(() => {
-        dispatch(getPersonDetailAction(id));
-      });
-  };
-
-  const handleCancel = () => {
-    setEditing(false);
-    setEditedData(persona);
+    dispatch(updatePersonAction(editedData));
+    
   };
 
   const handleDelete = () => {
@@ -48,33 +42,68 @@ const StaffDetail = ({ persona }) => {
       dispatch(deletePersonAction(id));
       dispatch(getAllPersonAction())
         .then(() => {
-          navigate('/user');
+          navigate('/home/user');
         });
 
     }
   };
 
   const handleBack = () => {
-    navigate("/user");
+    navigate("/home/user");
   };
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
+  
 
   useEffect(() => {
-    setEditedData(persona);
+    setEditedData({ ...persona });
+    
   }, [persona]);
+
+
+  const renderFields = (fields) => {
+    return fields.map((field) => (
+      <div className={styles.field} key={field.name}>
+        
+        <label>{field.label}:</label>
+        {editing ? (
+          field.options ? (
+            <select
+              value={editedData[field.name] || ''}
+              onChange={(e) => handleEdit(field.name, e.target.value)}
+              disabled={field.disabled}
+            >
+              <option value="">Seleccionar</option>
+              {field.options.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input
+              type="text"
+              value={editedData[field.name] || ''}
+              onChange={(e) => handleEdit(field.name, e.target.value)}
+              disabled={field.disabled}
+            />
+          )
+        ) : (
+          <div onDoubleClick={() => setEditing(true)}>{editedData[field.name]}</div>
+        )}
+      </div>
+    ));
+  };
+
+
 
 
 
 
   return (
-    <div className="card">
-      <div className="card-header">
+    <div className={styles.card}>
+      <div className={styles.cardHeader}>
         <h2>Detalles del empleado</h2>
-        <button className="close-btn" onClick={() => handleBack()}>X</button>
+        <button className={styles.closeBtn} onClick={() => handleBack()}>X</button>
       </div>
       <select value={selectedCategory} onChange={handleCategoryChange}>
         <option value="TODOS">Seleccionar categoría</option>
@@ -85,37 +114,37 @@ const StaffDetail = ({ persona }) => {
         ))}
       </select>
 
-      <div className="card-body">
+      <div className={styles.cardBody}>
 
         {selectedCategory === "TODOS" && (
           <>
             <h3>Información personal</h3>
-            {RenderFields(fieldsPersonalInformation, editing, editedData, handleEdit,setEditing)}
+            {renderFields(fieldsPersonalInformation)}
 
             <h3>Puesto de trabajo</h3>
-            {RenderFields(fieldsJob, editing, editedData, handleEdit,setEditing)}
+            {renderFields(fieldsJob)}
 
             <h3>Contacto</h3>
-            {RenderFields(fieldsContact, editing, editedData, handleEdit,setEditing)}
+            {renderFields(fieldsContact)}
 
             <h3>Direccion</h3>
-            {RenderFields(fieldAdress, editing, editedData, handleEdit,setEditing)}
+            {renderFields(fieldAdress)}
 
             {editedData.otraDireccion === 'SI' && (
               <>
                 <h3>Direccion</h3>
-                {RenderFields(fieldAdress2, editing, editedData, handleEdit,setEditing)}
+                {renderFields(fieldAdress2)}
               </>
             )}
 
             <h3>Educacion</h3>
-            {RenderFields(education, editing, editedData, handleEdit,setEditing)}
+            {renderFields(education)}
 
             <h3>Datos bancarios</h3>
-            {RenderFields(bankData, editing, editedData, handleEdit,setEditing)}
+            {renderFields(bankData)}
 
             <h3>Talle de ropa</h3>
-            {RenderFields(clothingSize, editing, editedData, handleEdit,setEditing)}
+            {renderFields(clothingSize)}
 
           </>
         )}
@@ -124,37 +153,37 @@ const StaffDetail = ({ persona }) => {
         {selectedCategory === "fieldsPersonalInformation" && (
           <>
             <h3>Información personal</h3>
-            {RenderFields(fieldsPersonalInformation, editing, editedData, handleEdit,setEditing)}
+            {renderFields(fieldsPersonalInformation)}
           </>
         )}
 
         {selectedCategory === "fieldsJob" && (
           <>
             <h3>Puesto de trabajo</h3>
-            {RenderFields(fieldsJob, editing, editedData, handleEdit,setEditing)}
+            {renderFields(fieldsJob)}
           </>
         )}
 
         {selectedCategory === "fieldsContact" && (
           <>
             <h3>Contacto</h3>
-            {RenderFields(fieldsContact, editing, editedData, handleEdit,setEditing)}
+            {renderFields(fieldsContact)}
           </>
         )}
 
         {selectedCategory === "fieldAdress" && (
           <>
             <h3>Direccion</h3>
-            {RenderFields(fieldAdress, editing, editedData, handleEdit,setEditing)}
+            {renderFields(fieldAdress)}
           </>
         )}
 
         {selectedCategory === "fieldAdress2" && (
           <>
-            {direccion.otraDireccion === 'SI' && (
+            {editedData.otraDireccion === 'SI' && (
               <>
                 <h3>Direccion</h3>
-                {RenderFields(fieldAdress2, editing, editedData, handleEdit,setEditing)}
+                {renderFields(fieldAdress2)}
               </>
             )}
           </>
@@ -163,45 +192,44 @@ const StaffDetail = ({ persona }) => {
         {selectedCategory === "education" && (
           <>
             <h3>Educacion</h3>
-            {RenderFields(education, editing, editedData, handleEdit,setEditing)}
+            {renderFields(education)}
           </>
         )}
 
         {selectedCategory === "bankData" && (
           <>
             <h3>Datos bancarios</h3>
-            {RenderFields(bankData, editing, editedData, handleEdit,setEditing)}
+            {renderFields(bankData)}
           </>
         )}
 
         {selectedCategory === "clothingSize" && (
           <>
             <h3>Talle de ropa</h3>
-            {RenderFields(clothingSize, editing, editedData, handleEdit,setEditing)}
+            {renderFields(clothingSize)}
           </>
         )}
 
       </div>
-      <div className="card-footer">
+
+      <div className={styles.cardFooter}>
         {editing && (
-          <div className="edit-buttons">
-            <button className="cancel-btn" onClick={handleDelete}>
+          <div className={styles.editButtons}>
+            <button className={styles.cancelBtn} onClick={handleDelete}>
               Eliminar empleado
             </button>
-            <button className="save-btn" onClick={handleSave}>
+            <button className={styles.saveBtn} onClick={handleSave}>
               Guardar cambios
             </button>
-            <button className="cancel-btn" onClick={handleCancel}>
+            <button className={styles.cancelBtn} onClick={() => setEditing(false)}>
               Cancelar
             </button>
           </div>
         )}
       </div>
       {
-        !editing ? <button className="save-btn" onClick={() => setEditing(true)}>Editar</button> : ''
+        !editing ? <button className={styles.saveBtn} onClick={() => setEditing(true)}>Editar</button> : ''
       }
-
-
     </div>
   );
 };

@@ -1,15 +1,30 @@
 const staff = [
     {
+        legajoId: '', no se modifica
+        cuilId: '', no se modifica
+        nombre: '', no se modifica
+        apellido: '', no se modifica
         puestoDeTrabajo: {
-            
+            //agregar puesto o cargo
+            sector: '', [pedir a patricia planilla]
+            linea: '', [pedir a patricia]
+            puesto: '', [pedir a patricia] 
+            turno: '', [mañana, tarde, noche, ] agregar campo rotativo : SI/NO
+            empresa: '', [Acheral S.A, Nobben, Vega]
+            condicion: '',[temporario, permanente]
+            tipoDePago: '',[Mensual, por hora]
+            ingreso: '',[fecha de inicio de actividades]
             alta: '',[fecha de innicio de temporada]  // guardar consultas de todos los años
             baja: '', [fecha de baja de temporada]    // guardar consultas de todos los años
             categoria: '', [Pedir a sergio]
+            convenio: '',  [alimentacion, agrario]
+            sindicato: '', [si/no]
+            solidario: '', [si/no]
             condicionCitricola: '', [] //quitar
             art: '', [asociar, prevencion]
             carnetSanidad: '', [si/no] //agregar fecha de vencimiento y de  emision
             carnetManipuladorAlimentos: '', [si/no] //agregar fecha de vencimiento y de emision
-            
+            //agregar estado del empleado, Activo Inactivo, Contratado Despedido, 
 
         },
         direccion: {
@@ -54,9 +69,13 @@ const staff = [
             },
         },
         informacionPersonalDos: {
-    
+            sexo: '', [masculino, femenino]
+            estadoCivil: '',[soltero, casado, etc]
+            edad: '', manual
+            nacimiento: '', manual
+            lentes: '',[si/no]
             antiGripal: '',[fecha ultima aplicacion] //guardar fechas de cada aplicacion
-        
+            carnetVacuna: '',[si/no]
             tratamientoMedicoMedicacion: {
                 medicacion: 'si o no',[] //en caso de si poner nombre de medicacion
                 nombreMedicacion: ''[]

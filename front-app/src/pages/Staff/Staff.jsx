@@ -1,45 +1,48 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import './Staff.css';
+import { useNavigate } from 'react-router-dom';
+import styles from './Staff.module.css';
 import NewEmployee from './NewEmployee/NewEmployee';
 import Swal from 'sweetalert2';
 
 import { getAllPersonAction } from '../../redux/actions';
 
-
 const Staff = () => {
-
   const dispatch = useDispatch();
-  const personal = useSelector(store => store.person.person); //traemos el estado global del store
+  const personal = useSelector(store => store.person.person);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("getAllPersonAction called");
     Swal.showLoading();
 
-    dispatch(getAllPersonAction()).then(() => {
-      Swal.close();
-    }).catch(() => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Ha ocurrido un error al cargar los empleados',
+    dispatch(getAllPersonAction())
+      .then(() => {
+        Swal.close();
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ha ocurrido un error al cargar los empleados',
+        });
       });
-    })
-  }, [])
-
+  }, []);
 
   const [filter, setFilter] = useState('');
-  const filteredPersonal = personal.filter((p) => //funcion para filtrar personas
+  const filteredPersonal = personal.filter((p) =>
     `${p.nombre} ${p.apellido} ${p.dni} ${p.legajo} ${p.sector}`
       .toLowerCase()
       .includes(filter.toLowerCase())
   );
 
+  const handleNavigate = (legajo) => {
+    navigate(`/home/user/${legajo}`);
+  };
 
   return (
-    <div className="personal-list">
-      <NewEmployee personal={personal} /> {/*Modal para agregar empleado nuevo */}
+    <div className={styles.personalList}>
+      <NewEmployee personal={personal} />
       <input
         type="text"
         placeholder="Busqueda"
@@ -59,37 +62,36 @@ const Staff = () => {
         </thead>
         <tbody>
           {filteredPersonal.map((p, i) => (
-
             <tr key={p.legajo}>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {i + 1}
-                </Link>
+                </button>
               </td>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {p.nombre}
-                </Link>
+                </button>
               </td>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {p.apellido}
-                </Link>
+                </button>
               </td>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {p.dni}
-                </Link>
+                </button>
               </td>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {p.legajo}
-                </Link>
+                </button>
               </td>
               <td>
-                <Link to={`/user/${p.legajo}`} className='link-table'>
+                <button onClick={() => handleNavigate(p.legajo)} className={styles.linkTable}>
                   {p.sector}
-                </Link>
+                </button>
               </td>
             </tr>
           ))}

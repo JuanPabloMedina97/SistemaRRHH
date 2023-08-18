@@ -40,14 +40,14 @@ const fieldsJob = [
 ];
 
 const fieldsContact = [
-    { label: 'Correo', name: 'correo', disabled: false },
+    { label: 'Correo Acheral', name: 'correo', disabled: false },
     { label: 'Correo', name: 'correo2', disabled: false },
     { label: 'Numero de celular', name: 'numTelefono', disabled: false },
     { label: 'Numero de celular', name: 'numTelefono2', disabled: false },
     { label: 'Nombre de pariente', name: 'nombrePariente', disabled: false },
     { label: 'Numero de celular', name: 'numeroPariente', disabled: false },
     { label: 'Nombre de pariente', name: 'nombrePariente2', disabled: false },
-    { label: 'Numero de pariente', name: 'numeroPariente2', disabled: false },
+    { label: 'Numero de celular', name: 'numeroPariente2', disabled: false },
 ];
 
 const fieldAdress = [
@@ -124,4 +124,7 @@ const categories = [
     { value: 'clothingSize', label: 'Talle de Ropa' },
   ];
 
-export {fieldsPersonalInformation, fieldsJob, fieldAdress, fieldAdress2, fieldsContact, education, bankData, clothingSize, categories};
+
+
+
+  export {fieldsPersonalInformation, fieldsJob, fieldsContact, fieldAdress, fieldAdress2, education, bankData, clothingSize, categories};
