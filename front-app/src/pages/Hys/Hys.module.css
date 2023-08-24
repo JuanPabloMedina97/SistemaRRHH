@@ -1,0 +1,42 @@
+.iconContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 32px;
+}
+
+.iconLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #555;
+  text-decoration: none;
+  margin: 16px;
+  transition: transform 0.3s;
+}
+
+.iconLink:hover {
+  transform: translateY(-8px);
+}
+
+.iconLink i {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.iconName {
+  /* font-size: 18px; */
+  /* font-weight: bold; */
+  white-space: normal;
+  text-align: center;
+}
+
+.iconLink.disabled {
+  color: gray;
+  pointer-events: none;
+}
+

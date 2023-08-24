@@ -17,6 +17,7 @@ export const LOGOUT_USER = "LOGOUT_USER";
 
 //STAFF
 export const getAllPersonAction = () => async (dispatch) => { //action que trae la lista de personas
+    
     try {
         const res = await axios.get("http://localhost:3001/home/user");
         dispatch({
@@ -59,9 +60,7 @@ export const createPersonAction = (person) => async (dispatch) => { //action que
 
 export const updatePersonAction = (person) => async (dispatch) => { //action que modifica a la persona ya creada
     try {
-        console.log("Aqui se hace el put");
         const response = await axios.put(`http://localhost:3001/home/user/${person.legajo}`, person);
-
         dispatch({
             type: UPDATE_PERSON,
             payload: response.data
@@ -84,7 +83,6 @@ export const deletePersonAction = (legajo) => {
             .catch((error) => {
                 console.log(error);
             })
-
     }
 }
 
@@ -92,14 +90,12 @@ export const deletePersonAction = (legajo) => {
 //USER
 export const createUserAction = (user) => async (dispatch) => {
     try {
-        console.log(user);
         const response = await axios.post('http://localhost:3001/auth/register', user);
         console.log('Usuario creado con exito.', response.data);
         dispatch({
             type: CREATE_USER,
             payload: user
         })
-        console.log("Usuario creado desde el action", user);
     } catch (error) {
         console.log('Error al crear el usuario: ', error.response.data.message);
     }
@@ -108,10 +104,8 @@ export const createUserAction = (user) => async (dispatch) => {
 export const getLoginAction = (user) => async (dispatch) => {
 
     try {
-
         const response = await axios.post('http://localhost:3001/auth/', user);
         const data = response.data;
-        console.log("Usuario desde el action", data);
         dispatch({
             type: LOGIN_USER,
             payload: data
@@ -125,9 +119,7 @@ export const getLoginAction = (user) => async (dispatch) => {
 
 export const getStatusUser = (user) => async (dispatch) => {
     try {
-
         const res = await axios.get(`http://localhost:3001/auth/isactive/${user}`);
-        
         dispatch({
             type: STATUS_USER,
             payload: res.data
@@ -139,7 +131,6 @@ export const getStatusUser = (user) => async (dispatch) => {
 
 export const logoutUserAction = (user) => async (dispatch) => {
     try {
-        console.log(user);
         const res = await axios.put(`http://localhost:3001/auth/logout/${user}`, user)
         dispatch({
             type: LOGOUT_USER,

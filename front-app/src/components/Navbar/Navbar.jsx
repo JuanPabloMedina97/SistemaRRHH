@@ -1,5 +1,4 @@
-
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ImagenLogo from '../../assets/Logo Aheral 2021 - Nueva identidad.png';
 import styles from './Navbar.module.css'
 import { useDispatch } from 'react-redux';
@@ -9,7 +8,8 @@ import Swal from 'sweetalert2';
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  const url = location.pathname;
 
   const status = parseInt(localStorage.getItem('Status'));
   const user = localStorage.getItem('User');
@@ -51,26 +51,40 @@ const Navbar = () => {
     }
   }
 
+  const goBack = () => {
+    navigate(-1);
+  }
 
-
+  console.log(url);
   return (
     <nav className={styles.navbar}>
       <div className={styles.navbarBrand}>
-        <button onClick={btnLogo}>
-          <img src={ImagenLogo} alt="" className={styles.logo} />
-        </button>
+        {url === '/' || url === '/home' ? (
+          <button onClick={btnLogo}>
+            <img src={ImagenLogo} alt="" className={styles.logo} />
+          </button>
+        ) : (
+          <>
+            <button onClick={goBack} className={styles.backButton}>
+              Atrás
+            </button>
+            <button onClick={btnLogo} className={styles.menuButton}>
+              Menú principal
+            </button>
+          </>
+        )}
       </div>
       <div className={styles.navbarMid}>
         <h1>Sistema de Recursos Humanos</h1>
       </div>
-      {
-        status ? (
-          <div className={styles.navbarEnd}>
-            <h4>Hola {name}</h4>
-            <button className={styles.logoutBtn} onClick={handleLogOut}>Cerrar sesión</button>
-          </div>
-        ) : ''
-      }
+      {status ? (
+        <div className={styles.navbarEnd}>
+          <h4>Hola {name}</h4>
+          <button className={styles.logoutBtn} onClick={handleLogOut}>
+            Cerrar sesión
+          </button>
+        </div>
+      ) : null}
     </nav>
   );
 };

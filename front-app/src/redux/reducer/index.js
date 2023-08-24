@@ -46,9 +46,7 @@ export default function staffReducer(state = initialState, action) {
         }
         case DELETE_PERSON: {
             const legajo = action.payload;
-            console.log(legajo);
             const newList = state.person.filter((user) => user.legajo !== legajo);
-            console.log(newList);
             return {
                 ...state,
                 person: newList,

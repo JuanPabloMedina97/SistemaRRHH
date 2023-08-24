@@ -51,3 +51,35 @@
   background: red;
   color: white;
 }
+
+.backButton {
+  background-color: red;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.backButton:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+.menuButton {
+  background-color: #008cba;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.menuButton:hover {
+  background-color: #444;
+  color: #fff;
+}

@@ -50,6 +50,10 @@ const router = createBrowserRouter([
                         element: <StaffParams />,
 
                     },
+                    {
+                        path: "hys",
+                        element: <Hys />
+                    }
 
                 ]
             }

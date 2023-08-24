@@ -22,7 +22,8 @@ const NewEmployee = () => {
         const formData = new FormData(event.target); //obtengo los datos del formulario (event.target) y los convierte en un obj
         const nuevoEmpleado = Object.fromEntries(formData);
 
-        const empleadoExistente = personal.find((empleado) => empleado.legajo === nuevoEmpleado.legajo);
+        const empleadoExistente = personal.find((empleado) => empleado.legajo === parseInt(nuevoEmpleado.legajo));
+        console.log("EMPLEADO EISTENTE",empleadoExistente);
         if (empleadoExistente) {
             setIsLoading(false); // Finalizar la carga
             Swal.fire({
