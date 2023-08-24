@@ -52,7 +52,11 @@ const Navbar = () => {
   }
 
   const goBack = () => {
-    navigate(-1);
+    if(url.split('/').length > 3){
+      navigate(-1);
+    } else {
+      navigate('/home');
+    }
   }
 
   console.log(url);
