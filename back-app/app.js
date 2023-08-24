@@ -6,6 +6,7 @@ const expressJsonMiddleware = require('./src/middlewares/expressJson');
 const personRoutes = require('./src/routes/personRoutes'); //trae el listado de personas (solo para mostrar lo principal, el detalle va en otra ruta)
 const authRoutes = require('./src/routes/authRoutes');
 
+
 server.use(corsMiddleware);
 server.use(expressJsonMiddleware);
 server.use(morganMiddleware);

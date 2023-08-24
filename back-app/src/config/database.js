@@ -1,11 +1,18 @@
 const mysql = require('mysql2');
+require('dotenv').config();
+
+const dbHost = process.env.DB_HOST;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD;
+const dbDataBase = process.env.DB_DATABASE;
+const dbPort = process.env.DB_PORT;
 
 const connection = mysql.createConnection({
-  host: '143.0.66.114', // Nombre del host de la base de datos
-  user: 'root', // Nombre de usuario de la base de datos
-  password: 'Pentagono767*', // Contraseña de la base de datos
-  database: 'rrhh', // Nombre de la base de datos
-  port: 3306
+  host: dbHost, // Nombre del host de la base de datos
+  user: dbUser, // Nombre de usuario de la base de datos
+  password: dbPassword, // Contraseña de la base de datos
+  database: dbDataBase, // Nombre de la base de datos
+  port: dbPort
 });
 
 connection.connect((err) => {
