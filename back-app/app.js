@@ -20,6 +20,6 @@ server.use('/auth', authRoutes);
 
 
 
-server.listen(3001, ()=>{
+server.listen(3001, '143.0.66.114', () => {
     console.log("Servidor con express corriendo en el puerto 3001");
 });

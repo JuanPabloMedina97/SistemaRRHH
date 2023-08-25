@@ -59,7 +59,7 @@ const Navbar = () => {
     }
   }
 
-  console.log(url);
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.navbarBrand}>

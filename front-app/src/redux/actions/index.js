@@ -1,4 +1,5 @@
 import axios from 'axios';
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 
@@ -19,7 +20,7 @@ export const LOGOUT_USER = "LOGOUT_USER";
 export const getAllPersonAction = () => async (dispatch) => { //action que trae la lista de personas
     
     try {
-        const res = await axios.get("http://localhost:3001/home/user");
+        const res = await axios.get(`http://${apiUrl}/home/user`);
         dispatch({
             type: GET_ALL_PERSON,
             payload: res.data
@@ -31,7 +32,7 @@ export const getAllPersonAction = () => async (dispatch) => { //action que trae 
 
 export const getPersonDetailAction = (legajo) => async (dispatch) => { //action que trae el detalle de la persona por su legajo
 
-    axios(`http://localhost:3001/home/user/${legajo}`)
+    axios(`http://${apiUrl}/home/user/${legajo}`)
         .then(response => {
             const result = response.data;
             dispatch({
@@ -46,7 +47,7 @@ export const getPersonDetailAction = (legajo) => async (dispatch) => { //action 
 
 export const createPersonAction = (person) => async (dispatch) => { //action que crea una persona nueva
     try {
-        const response = await axios.post('http://localhost:3001/home/user', person)
+        const response = await axios.post(`http://${apiUrl}/home/user`, person)
         console.log('Empleado agregado con exito: ', response.data);
         dispatch({
             type: CREATE_PERSON,
@@ -60,7 +61,7 @@ export const createPersonAction = (person) => async (dispatch) => { //action que
 
 export const updatePersonAction = (person) => async (dispatch) => { //action que modifica a la persona ya creada
     try {
-        const response = await axios.put(`http://localhost:3001/home/user/${person.legajo}`, person);
+        const response = await axios.put(`http://${apiUrl}/home/user/${person.legajo}`, person);
         dispatch({
             type: UPDATE_PERSON,
             payload: response.data
@@ -73,7 +74,7 @@ export const updatePersonAction = (person) => async (dispatch) => { //action que
 
 export const deletePersonAction = (legajo) => {
     return (dispatch) => {
-        axios.delete(`http://localhost:3001/home/user/${legajo}`)
+        axios.delete(`http://${apiUrl}/home/user/${legajo}`)
             .then(() => {
                 dispatch({
                     type: DELETE_PERSON,
@@ -90,7 +91,7 @@ export const deletePersonAction = (legajo) => {
 //USER
 export const createUserAction = (user) => async (dispatch) => {
     try {
-        const response = await axios.post('http://localhost:3001/auth/register', user);
+        const response = await axios.post(`http://${apiUrl}/auth/register`, user);
         console.log('Usuario creado con exito.', response.data);
         dispatch({
             type: CREATE_USER,
@@ -104,7 +105,7 @@ export const createUserAction = (user) => async (dispatch) => {
 export const getLoginAction = (user) => async (dispatch) => {
 
     try {
-        const response = await axios.post('http://localhost:3001/auth/', user);
+        const response = await axios.post(`http://${apiUrl}/auth/`, user);
         const data = response.data;
         dispatch({
             type: LOGIN_USER,
@@ -119,7 +120,7 @@ export const getLoginAction = (user) => async (dispatch) => {
 
 export const getStatusUser = (user) => async (dispatch) => {
     try {
-        const res = await axios.get(`http://localhost:3001/auth/isactive/${user}`);
+        const res = await axios.get(`http://${apiUrl}/auth/isactive/${user}`);
         dispatch({
             type: STATUS_USER,
             payload: res.data
@@ -131,7 +132,7 @@ export const getStatusUser = (user) => async (dispatch) => {
 
 export const logoutUserAction = (user) => async (dispatch) => {
     try {
-        const res = await axios.put(`http://localhost:3001/auth/logout/${user}`, user)
+        const res = await axios.put(`http://${apiUrl}/auth/logout/${user}`, user)
         dispatch({
             type: LOGOUT_USER,
             payload: res.data

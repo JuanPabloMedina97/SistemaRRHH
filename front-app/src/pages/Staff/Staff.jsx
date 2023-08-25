@@ -13,7 +13,6 @@ const Staff = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("getAllPersonAction called");
     Swal.showLoading();
 
     dispatch(getAllPersonAction())

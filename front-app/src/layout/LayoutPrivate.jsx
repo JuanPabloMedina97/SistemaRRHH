@@ -10,7 +10,6 @@ const LayoutPrivate = () => {
             navigate('/');
         }
     }, [status, navigate]);
-    console.log(status);
 
     return (
         <>
