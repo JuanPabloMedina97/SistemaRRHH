@@ -31,7 +31,7 @@
 .iconName {
   /* font-size: 18px; */
   /* font-weight: bold; */
-  white-space: normal;
+  white-space: pre-line;
   text-align: center;
 }
 
