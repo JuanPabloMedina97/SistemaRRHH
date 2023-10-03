@@ -7,6 +7,10 @@ const personRoutes = require('./src/routes/personRoutes'); //trae el listado de 
 const authRoutes = require('./src/routes/authRoutes');
 
 
+require('dotenv').config();
+const urlServer = process.env.URL_SERVER;
+const portServer = process.env.PORT_SERVER;
+
 server.use(corsMiddleware);
 server.use(expressJsonMiddleware);
 server.use(morganMiddleware);
@@ -20,6 +24,6 @@ server.use('/auth', authRoutes);
 
 
 
-server.listen(3001, '143.0.66.114', () => {
-    console.log("Servidor con express corriendo en el puerto 3001");
+server.listen(portServer, `${urlServer}`, () => {
+    console.log("Servidor con express iniciado");
 });

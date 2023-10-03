@@ -63,7 +63,7 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.navbarBrand}>
-        {url === '/' || url === '/home' ? (
+        {url === '/' || url === '/home' || '/register' || '/forgotpassword' ? (
           <button onClick={btnLogo}>
             <img src={ImagenLogo} alt="" className={styles.logo} />
           </button>

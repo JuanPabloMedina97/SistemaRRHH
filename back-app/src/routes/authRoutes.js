@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const connection = require('../config/database');
-
+const {sendPassword} = require('../controllers/forgotPassController')
 
 const router = express.Router();
 
@@ -115,6 +115,19 @@ router.put('/logout/:user', async (req, res) => {
         return res.status(500).json({ message: 'Error al cerra sesion' });
     }
 })
+
+router.post('/forgotpassword/:user', async (req, res) => {
+    try {
+        const userMail = req.params.user
+        await sendPassword(userMail)
+        
+
+        return res.status(200).json({ message: `Usuario: ${userMail}` })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: error });
+    }
+});
 
 
 
